@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Test</title>
+</head>
+<body>
+    <h1>API Debug Test</h1>
+    
+    <div>
+        <h2>Test Simplification</h2>
+        <textarea id="testText" rows="4" cols="80">The comprehensive utilization of sophisticated technological infrastructure facilitates the accommodation of substantial data processing requirements.</textarea>
+        <br><br>
+        <button onclick="testSimplify('elementary')">Elementary</button>
+        <button onclick="testSimplify('middle')">Middle</button>
+        <button onclick="testSimplify('high')">High School</button>
+        <br><br>
+        <div id="result"></div>
+    </div>
+
+    <div>
+        <h2>Test Translation</h2>
+        <textarea id="translateText" rows="4" cols="80">Hello, how are you today? I hope you are having a wonderful day!</textarea>
+        <br><br>
+        <button onclick="testTranslate('en', 'es')">English to Spanish</button>
+        <button onclick="testTranslate('en', 'fr')">English to French</button>
+        <br><br>
+        <div id="translateResult"></div>
+    </div>
+
+    <script>
+        async function testSimplify(level) {
+            const text = document.getElementById('testText').value;
+            const resultDiv = document.getElementById('result');
+            
+            resultDiv.innerHTML = `<p>Testing ${level} level...</p>`;
+            
+            try {
+                const response = await fetch('http://localhost:3001/api/text/process', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        text: text,
+                        action: 'simplify',
+                        options: {
+                            level: level
+                        }
+                    })
+                });
+
+                const data = await response.json();
+                console.log('API Response:', data);
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <h3>${level} Level Result:</h3>
+                        <p><strong>Original:</strong> ${data.data.original_text}</p>
+                        <p><strong>Simplified:</strong> ${data.data.processed_text}</p>
+                        <p><em>Processing time: ${data.data.processing_time_ms}ms</em></p>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+                resultDiv.innerHTML = `<p style="color: red;">Network Error: ${error.message}</p>`;
+            }
+        }
+
+        async function testTranslate(from, to) {
+            const text = document.getElementById('translateText').value;
+            const resultDiv = document.getElementById('translateResult');
+            
+            resultDiv.innerHTML = `<p>Translating from ${from} to ${to}...</p>`;
+            
+            try {
+                const response = await fetch('http://localhost:3001/api/text/process', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        text: text,
+                        action: 'translate',
+                        options: {
+                            from: from,
+                            to: to
+                        }
+                    })
+                });
+
+                const data = await response.json();
+                console.log('Translation Response:', data);
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <h3>Translation Result (${from} → ${to}):</h3>
+                        <p><strong>Original:</strong> ${data.data.original_text}</p>
+                        <p><strong>Translated:</strong> ${data.data.processed_text}</p>
+                        <p><em>Processing time: ${data.data.processing_time_ms}ms</em></p>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+                resultDiv.innerHTML = `<p style="color: red;">Network Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

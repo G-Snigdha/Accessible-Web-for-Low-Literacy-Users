@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 Chrome Built-in AI Extension Test Page</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+        
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 15px;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .complex-text {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            font-style: italic;
+        }
+        
+        .shortcuts {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+        
+        .shortcut {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            border-radius: 25px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+        
+        .status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            font-weight: bold;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .instruction {
+            background: rgba(255, 193, 7, 0.2);
+            border: 1px solid rgba(255, 193, 7, 0.5);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="status">✅ Extension Test Page Ready</div>
+    
+    <div class="container">
+        <h1>🧠 Chrome Built-in AI Extension Test</h1>
+        
+        <div class="instruction">
+            <strong>🎯 How to Test:</strong>
+            <ol>
+                <li>Select any text below</li>
+                <li>Try the keyboard shortcuts</li>
+                <li>Click the extension icon (🧠) in Chrome's toolbar</li>
+                <li>Right-click for context menu options</li>
+            </ol>
+        </div>
+        
+        <div class="shortcuts">
+            <strong>⌨️ Keyboard Shortcuts:</strong><br>
+            <span class="shortcut">Alt+S</span> Simplify
+            <span class="shortcut">Alt+P</span> Proofread
+            <span class="shortcut">Alt+T</span> Translate
+            <span class="shortcut">Alt+L</span> Read Aloud
+            <span class="shortcut">Alt+Shift+S</span> Toggle Sidebar
+        </div>
+        
+        <div class="test-section">
+            <h2>📚 Test Text #1: Complex Academic Content</h2>
+            <div class="complex-text">
+                The implementation of machine learning algorithms in contemporary computational paradigms necessitates a comprehensive understanding of statistical methodologies, mathematical optimization techniques, and algorithmic complexity theory. This interdisciplinary approach facilitates the development of robust artificial intelligence systems capable of processing multidimensional data structures and generating predictive models with enhanced accuracy metrics.
+            </div>
+            <p><strong>Try:</strong> Select this text and press <code>Alt+S</code> to simplify it!</p>
+        </div>
+        
+        <div class="test-section">
+            <h2>📝 Test Text #2: Text with Errors</h2>
+            <div class="complex-text">
+                This sentance has several gramatical erors and mispellings that need to be corrected. The punctuation is also incorect, and there are some awkward phrasings that could be improoved for better readibility and clarity.
+            </div>
+            <p><strong>Try:</strong> Select this text and press <code>Alt+P</code> to proofread it!</p>
+        </div>
+        
+        <div class="test-section">
+            <h2>🌍 Test Text #3: Translation Sample</h2>
+            <div class="complex-text">
+                Hello, welcome to our accessibility extension. This tool helps make web content easier to understand for everyone. We believe technology should be inclusive and accessible to all users regardless of their reading level or abilities.
+            </div>
+            <p><strong>Try:</strong> Select this text and press <code>Alt+T</code> to translate it!</p>
+        </div>
+        
+        <div class="test-section">
+            <h2>🔊 Test Text #4: Text-to-Speech Sample</h2>
+            <div class="complex-text">
+                This is a perfect sentence for testing the text-to-speech functionality. The extension will read this text aloud using Chrome's built-in speech synthesis capabilities, making content accessible to users with visual impairments or reading difficulties.
+            </div>
+            <p><strong>Try:</strong> Select this text and press <code>Alt+L</code> to hear it read aloud!</p>
+        </div>
+        
+        <div class="test-section">
+            <h2>🎯 Extension Features Being Tested</h2>
+            <ul>
+                <li>✅ <strong>Prompt API</strong> - Text simplification and explanation</li>
+                <li>✅ <strong>Proofreader API</strong> - Grammar and spelling correction</li>
+                <li>✅ <strong>Translator API</strong> - Multi-language translation</li>
+                <li>✅ <strong>Rewriter API</strong> - Content rewriting and improvement</li>
+                <li>✅ <strong>Summarizer API</strong> - Content summarization</li>
+                <li>✅ <strong>Writer API</strong> - Content generation and enhancement</li>
+                <li>✅ <strong>Text-to-Speech</strong> - Audio accessibility features</li>
+                <li>✅ <strong>Keyboard Navigation</strong> - Full accessibility support</li>
+            </ul>
+        </div>
+        
+        <div class="instruction">
+            <strong>🚀 Success Indicators:</strong>
+            <ul>
+                <li>Extension icon appears in Chrome toolbar</li>
+                <li>Keyboard shortcuts trigger AI processing</li>
+                <li>Right-click context menu shows AI options</li>
+                <li>AI sidebar opens with Alt+Shift+S</li>
+                <li>Text processing happens locally (no internet required after setup)</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // Add visual feedback for extension testing
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🧠 Chrome Built-in AI Extension Test Page Loaded');
+            console.log('📋 Test the following features:');
+            console.log('   - Select text and use keyboard shortcuts');
+            console.log('   - Click the extension icon in toolbar');
+            console.log('   - Right-click for context menu');
+            console.log('   - Try Alt+Shift+S for AI sidebar');
+            
+            // Visual feedback when text is selected
+            document.addEventListener('mouseup', function() {
+                const selection = window.getSelection().toString();
+                if (selection.length > 0) {
+                    console.log('✅ Text selected:', selection.substring(0, 50) + '...');
+                    console.log('💡 Try keyboard shortcuts now!');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

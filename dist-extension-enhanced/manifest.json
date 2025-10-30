@@ -1,0 +1,92 @@
+{
+  "manifest_version": 3,
+  "name": "Accessible Web AI - Enhanced Edition",
+  "version": "2.1.0",
+  "description": "Advanced accessibility extension powered by Chrome's Built-in AI (Gemini Nano) for text simplification, translation, proofreading, and text-to-speech - all offline and private!",
+  "author": "Accessible Web Team",
+  
+  "permissions": [
+    "scripting",
+    "activeTab", 
+    "storage",
+    "tabs",
+    "notifications",
+    "tts",
+    "contextMenus",
+    "sidePanel"
+  ],
+  
+  "optional_permissions": [
+    "aiLanguageModelOriginTrial"
+  ],
+  
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  
+  "background": {
+    "service_worker": "src/enhanced-background.js",
+    "type": "module"
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["src/enhanced-content-script.js"],
+      "css": ["src/styles/extension.css"],
+      "run_at": "document_end"
+    }
+  ],
+  
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Accessible Web AI",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  
+  "options_page": "options.html",
+  
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  
+  "web_accessible_resources": [
+    {
+      "resources": ["src/styles/extension.css", "icons/*"],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ],
+  
+  "commands": {
+    "toggle-sidebar": {
+      "suggested_key": {
+        "default": "Alt+Shift+S",
+        "mac": "Alt+Shift+S"
+      },
+      "description": "Toggle AI assistant sidebar"
+    },
+    "simplify-page": {
+      "suggested_key": {
+        "default": "Alt+S",
+        "mac": "Alt+S"
+      },
+      "description": "Simplify selected text"
+    },
+    "read-aloud": {
+      "suggested_key": {
+        "default": "Alt+L",
+        "mac": "Alt+L"
+      },
+      "description": "Read selected text aloud"
+    }
+  }
+}

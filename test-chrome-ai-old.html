@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chrome Built-in AI - Quick Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        .test-section {
+            margin: 25px 0;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .test-section h2 {
+            margin-top: 0;
+            color: #333;
+            font-size: 18px;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 5px;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            background: #f0f0f0;
+            font-family: monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            border-left: 4px solid #ffc107;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-ready { background: #28a745; }
+        .status-loading { background: #ffc107; }
+        .status-error { background: #dc3545; }
+        .summary {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e7f3ff;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Chrome Built-in AI - Quick Test Page</h1>
+        <p>Use this page to quickly test which Chrome Built-in AI APIs are working in your browser.</p>
+        
+        <div class="test-section">
+            <h2>Step 1: Environment Check</h2>
+            <button onclick="checkEnvironment()">Check Environment</button>
+            <div id="env-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>Step 2: Test Prompt API (Most Important)</h2>
+            <button onclick="testPrompt()">Test Prompt API</button>
+            <div id="prompt-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>Step 3: Test Summarizer API</h2>
+            <button onclick="testSummarizer()">Test Summarizer API</button>
+            <div id="summarizer-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>Step 4: Test Writer API</h2>
+            <button onclick="testWriter()">Test Writer API</button>
+            <div id="writer-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>Step 5: Test Rewriter API (for Simplify)</h2>
+            <button onclick="testRewriter()">Test Rewriter API</button>
+            <div id="rewriter-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>Step 6: Test Translator API</h2>
+            <button onclick="testTranslator()">Test Translator API</button>
+            <div id="translator-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>Step 7: Test Proofreader (via Prompt)</h2>
+            <button onclick="testProofreader()">Test Proofreader</button>
+            <div id="proofreader-result"></div>
+        </div>
+
+        <div id="summary" class="summary" style="display: none;">
+            <h2>📊 Test Summary</h2>
+            <div id="summary-content"></div>
+        </div>
+    </div>
+
+    <script>
+        let testResults = {
+            prompt: null,
+            summarizer: null,
+            writer: null,
+            rewriter: null,
+            translator: null,
+            proofreader: null
+        };
+
+        function updateSummary() {
+            const summaryDiv = document.getElementById('summary');
+            const content = document.getElementById('summary-content');
+            
+            let working = 0;
+            let total = 0;
+            let html = '<ul>';
+            
+            for (const [api, status] of Object.entries(testResults)) {
+                if (status !== null) {
+                    total++;
+                    if (status === true) working++;
+                    const icon = status ? '✅' : '❌';
+                    const name = api.charAt(0).toUpperCase() + api.slice(1);
+                    html += `<li>${icon} <strong>${name} API:</strong> ${status ? 'Working' : 'Not Working'}</li>`;
+                }
+            }
+            
+            html += '</ul>';
+            html += `<p><strong>Result: ${working}/${total} APIs working</strong></p>`;
+            
+            if (working >= 1) {
+                html += '<p class="success">✅ You have at least one working API! You can proceed with your demo.</p>';
+            }
+            if (working >= 3) {
+                html += '<p class="success">🎉 Great! Multiple APIs working - you have a strong demo!</p>';
+            }
+            if (total > 0 && working === 0) {
+                html += '<p class="error">⚠️ No APIs working. Check Chrome version, flags, and model download.</p>';
+            }
+            
+            content.innerHTML = html;
+            summaryDiv.style.display = 'block';
+        }
+
+        async function checkEnvironment() {
+            const resultDiv = document.getElementById('env-result');
+            resultDiv.innerHTML = '<div class="result info">Checking environment...</div>';
+            
+            let results = [];
+            
+            // Check Chrome version
+            const userAgent = navigator.userAgent;
+            const isCanary = userAgent.includes('Chrome/') && userAgent.includes('Canary');
+            const isDev = userAgent.includes('Chrome/') && userAgent.includes('Dev');
+            const isChrome = userAgent.includes('Chrome/');
+            
+            results.push('🌐 <strong>Browser:</strong> ' + (isCanary ? 'Chrome Canary ✅' : isDev ? 'Chrome Dev ✅' : isChrome ? 'Chrome (Regular) ⚠️ Use Canary!' : 'Not Chrome ❌'));
+            
+            // Check AI object
+            results.push('🤖 <strong>window.ai exists:</strong> ' + (window.ai ? 'Yes ✅' : 'No ❌ (Enable flags!)'));
+            
+            if (window.ai) {
+                results.push('💭 <strong>Prompt API available:</strong> ' + (window.ai.languageModel ? 'Yes ✅' : 'No ❌'));
+                results.push('📄 <strong>Summarizer API available:</strong> ' + (window.ai.summarizer ? 'Yes ✅' : 'No ❌'));
+                results.push('✏️ <strong>Writer API available:</strong> ' + (window.ai.writer ? 'Yes ✅' : 'No ❌'));
+                results.push('🖊️ <strong>Rewriter API available:</strong> ' + (window.ai.rewriter ? 'Yes ✅' : 'No ❌'));
+                results.push('🌐 <strong>Translator API available:</strong> ' + (window.ai.translator ? 'Yes ✅' : 'No ⚠️ (Very new)'));
+            }
+            
+            const html = `<div class="result ${window.ai ? 'success' : 'error'}">${results.join('<br>')}</div>`;
+            resultDiv.innerHTML = html;
+        }
+
+        async function testPrompt() {
+            const resultDiv = document.getElementById('prompt-result');
+            resultDiv.innerHTML = '<div class="result info">Testing Prompt API...</div>';
+            
+            try {
+                if (!window.ai?.languageModel) {
+                    throw new Error('Prompt API not available. Enable flags and download model!');
+                }
+                
+                const session = await window.ai.languageModel.create();
+                const response = await session.prompt('Say hello in exactly 5 words');
+                session.destroy();
+                
+                testResults.prompt = true;
+                resultDiv.innerHTML = `<div class="result success">✅ <strong>Prompt API Works!</strong><br><br>Response: "${response}"</div>`;
+            } catch (error) {
+                testResults.prompt = false;
+                resultDiv.innerHTML = `<div class="result error">❌ <strong>Prompt API Failed</strong><br><br>Error: ${error.message}<br><br>💡 Fix: Enable flags, download model (chrome://components/)</div>`;
+            }
+            updateSummary();
+        }
+
+        async function testSummarizer() {
+            const resultDiv = document.getElementById('summarizer-result');
+            resultDiv.innerHTML = '<div class="result info">Testing Summarizer API...</div>';
+            
+            try {
+                if (!window.ai?.summarizer) {
+                    throw new Error('Summarizer API not available');
+                }
+                
+                const text = 'Artificial intelligence (AI) is intelligence demonstrated by machines, as opposed to natural intelligence displayed by animals including humans. AI research has been defined as the field of study of intelligent agents, which refers to any system that perceives its environment and takes actions that maximize its chance of achieving its goals.';
+                
+                const summarizer = await window.ai.summarizer.create({
+                    type: 'key-points',
+                    length: 'short'
+                });
+                const summary = await summarizer.summarize(text);
+                summarizer.destroy();
+                
+                testResults.summarizer = true;
+                resultDiv.innerHTML = `<div class="result success">✅ <strong>Summarizer API Works!</strong><br><br>Summary: "${summary}"</div>`;
+            } catch (error) {
+                testResults.summarizer = false;
+                resultDiv.innerHTML = `<div class="result error">❌ <strong>Summarizer API Failed</strong><br><br>Error: ${error.message}</div>`;
+            }
+            updateSummary();
+        }
+
+        async function testWriter() {
+            const resultDiv = document.getElementById('writer-result');
+            resultDiv.innerHTML = '<div class="result info">Testing Writer API...</div>';
+            
+            try {
+                if (!window.ai?.writer) {
+                    throw new Error('Writer API not available');
+                }
+                
+                const writer = await window.ai.writer.create({
+                    tone: 'casual',
+                    length: 'short'
+                });
+                const content = await writer.write('Benefits of renewable energy');
+                writer.destroy();
+                
+                testResults.writer = true;
+                resultDiv.innerHTML = `<div class="result success">✅ <strong>Writer API Works!</strong><br><br>Generated: "${content}"</div>`;
+            } catch (error) {
+                testResults.writer = false;
+                resultDiv.innerHTML = `<div class="result error">❌ <strong>Writer API Failed</strong><br><br>Error: ${error.message}<br><br>💡 This API is experimental - may not work yet</div>`;
+            }
+            updateSummary();
+        }
+
+        async function testRewriter() {
+            const resultDiv = document.getElementById('rewriter-result');
+            resultDiv.innerHTML = '<div class="result info">Testing Rewriter API...</div>';
+            
+            try {
+                if (!window.ai?.rewriter) {
+                    throw new Error('Rewriter API not available');
+                }
+                
+                const text = 'This is an extraordinarily sophisticated and complex sentence.';
+                const rewriter = await window.ai.rewriter.create({
+                    tone: 'more-casual',
+                    length: 'shorter'
+                });
+                const rewritten = await rewriter.rewrite(text);
+                rewriter.destroy();
+                
+                testResults.rewriter = true;
+                resultDiv.innerHTML = `<div class="result success">✅ <strong>Rewriter API Works!</strong> (Simplify will work)<br><br>Original: "${text}"<br>Rewritten: "${rewritten}"</div>`;
+            } catch (error) {
+                testResults.rewriter = false;
+                resultDiv.innerHTML = `<div class="result error">❌ <strong>Rewriter API Failed</strong> (Simplify won't work)<br><br>Error: ${error.message}<br><br>💡 This API is experimental - may not work yet</div>`;
+            }
+            updateSummary();
+        }
+
+        async function testTranslator() {
+            const resultDiv = document.getElementById('translator-result');
+            resultDiv.innerHTML = '<div class="result info">Testing Translator API...</div>';
+            
+            try {
+                if (!window.ai?.translator) {
+                    throw new Error('Translator API not available');
+                }
+                
+                const text = 'Hello, how are you?';
+                const translator = await window.ai.translator.create({
+                    sourceLanguage: 'en',
+                    targetLanguage: 'es'
+                });
+                const translated = await translator.translate(text);
+                translator.destroy();
+                
+                testResults.translator = true;
+                resultDiv.innerHTML = `<div class="result success">✅ <strong>Translator API Works!</strong><br><br>English: "${text}"<br>Spanish: "${translated}"</div>`;
+            } catch (error) {
+                testResults.translator = false;
+                resultDiv.innerHTML = `<div class="result error">❌ <strong>Translator API Failed</strong><br><br>Error: ${error.message}<br><br>💡 This is the newest API - limited support</div>`;
+            }
+            updateSummary();
+        }
+
+        async function testProofreader() {
+            const resultDiv = document.getElementById('proofreader-result');
+            resultDiv.innerHTML = '<div class="result info">Testing Proofreader (via Prompt API)...</div>';
+            
+            try {
+                if (!window.ai?.languageModel) {
+                    throw new Error('Prompt API not available (required for Proofreader)');
+                }
+                
+                const text = 'Thi sentense have erors';
+                const session = await window.ai.languageModel.create({
+                    systemPrompt: 'You are a proofreader. Fix grammar and spelling errors. Return only the corrected text.',
+                    temperature: 0.3
+                });
+                const corrected = await session.prompt(text);
+                session.destroy();
+                
+                testResults.proofreader = true;
+                resultDiv.innerHTML = `<div class="result success">✅ <strong>Proofreader Works!</strong> (via Prompt API)<br><br>Original: "${text}"<br>Corrected: "${corrected}"</div>`;
+            } catch (error) {
+                testResults.proofreader = false;
+                resultDiv.innerHTML = `<div class="result error">❌ <strong>Proofreader Failed</strong><br><br>Error: ${error.message}</div>`;
+            }
+            updateSummary();
+        }
+
+        // Auto-run environment check on load
+        window.addEventListener('load', () => {
+            checkEnvironment();
+        });
+    </script>
+</body>
+</html>

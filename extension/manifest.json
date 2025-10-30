@@ -1,0 +1,72 @@
+{
+  "manifest_version": 3,
+  "name": "Accessible Web AI - Chrome Built-in AI Challenge 2025",
+  "version": "2.0.0",
+  "description": "Leverage Chrome's Built-in AI (Gemini Nano) for text simplification, proofreading, translation, rewriting, summarization & creative writing - all offline & private!",
+  "author": "Your Name",
+  
+  "permissions": [
+    "scripting",
+    "activeTab", 
+    "storage",
+    "tabs",
+    "notifications",
+    "tts",
+    "contextMenus",
+    "sidePanel"
+  ],
+  
+  "optional_permissions": [
+    "aiLanguageModelOriginTrial"
+  ],
+  
+  "trial_tokens": [
+    "YOUR_ORIGIN_TRIAL_TOKEN_HERE"
+  ],
+  
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  
+  "background": {
+    "service_worker": "src/enhanced-background.ts",
+    "type": "module"
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["src/enhanced-content-script.tsx"],
+      "css": ["src/styles/extension.css"],
+      "run_at": "document_end"
+    }
+  ],
+  
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Accessible Web",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  
+  "options_page": "options.html",
+  
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  
+  "web_accessible_resources": [
+    {
+      "resources": ["src/sidebar-root.tsx", "src/styles.css"],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ]
+}

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feature Test - Accessible Text Reader</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            background: #f8fafc;
+        }
+        .test-controls {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #4f46e5;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #4338ca;
+        }
+        button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+        .result {
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #22c55e;
+            min-height: 50px;
+        }
+        .error {
+            border-left-color: #ef4444;
+            background: #fef2f2;
+        }
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            font-family: inherit;
+            resize: vertical;
+        }
+        .status {
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .success { color: #22c55e; }
+        .error-text { color: #ef4444; }
+        .loading { color: #f59e0b; }
+        
+        /* Toast styles */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #22c55e;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+        .toast.show {
+            transform: translateX(0);
+        }
+        .toast.error {
+            background: #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Feature Test Suite - Accessible Text Reader</h1>
+    
+    <div class="test-section">
+        <h2>📝 Text Input</h2>
+        <textarea id="test-text" placeholder="Enter text to test features...">This is a comprehensive test to utilize sophisticated algorithms for demonstration purposes. Hello world!</textarea>
+        <button onclick="loadExampleText()">Load Example Text</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>🔧 Core Features</h2>
+        <div class="test-controls">
+            <button onclick="testFeature('simplify')" id="btn-simplify">📝 Test Simplify</button>
+            <button onclick="testFeature('translate')" id="btn-translate">🌐 Test Translate</button>
+            <button onclick="testFeature('analyze')" id="btn-analyze">📊 Test Analyze</button>
+            <button onclick="testFeature('proofread')" id="btn-proofread">✏️ Test Proofread</button>
+            <button onclick="testFeature('rewrite')" id="btn-rewrite">📝 Test Rewrite</button>
+        </div>
+        <div class="status" id="feature-status">Ready to test features</div>
+        <div class="result" id="feature-result">Results will appear here...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>🔊 Text-to-Speech Test</h2>
+        <div class="test-controls">
+            <button onclick="testTTS()">🔊 Test Read Aloud</button>
+            <button onclick="stopTTS()">⏹️ Stop Speech</button>
+            <button onclick="checkTTSSupport()">ℹ️ Check TTS Support</button>
+        </div>
+        <div class="status" id="tts-status">Ready to test TTS</div>
+        <div class="result" id="tts-result">TTS test results will appear here...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>⚙️ Settings Test</h2>
+        <div class="test-controls">
+            <button onclick="testSettingsSave()">💾 Test Settings Save</button>
+            <button onclick="testSettingsLoad()">📂 Test Settings Load</button>
+            <button onclick="testFontSizeChange()">🔍 Test Font Size</button>
+            <button onclick="testContrastChange()">🎨 Test Contrast</button>
+        </div>
+        <div class="status" id="settings-status">Ready to test settings</div>
+        <div class="result" id="settings-result">Settings test results will appear here...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>🌐 API Health Check</h2>
+        <div class="test-controls">
+            <button onclick="testBackendHealth()">❤️ Check Backend Health</button>
+            <button onclick="testAPIEndpoint()">🔌 Test API Direct</button>
+        </div>
+        <div class="status" id="api-status">Ready to test API</div>
+        <div class="result" id="api-result">API test results will appear here...</div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3001';
+        
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => document.body.removeChild(toast), 300);
+            }, 3000);
+        }
+        
+        function setStatus(sectionId, message, type = 'loading') {
+            const status = document.getElementById(`${sectionId}-status`);
+            status.textContent = message;
+            status.className = `status ${type}`;
+        }
+        
+        function setResult(sectionId, content, isError = false) {
+            const result = document.getElementById(`${sectionId}-result`);
+            result.innerHTML = content;
+            result.className = `result ${isError ? 'error' : ''}`;
+        }
+        
+        function loadExampleText() {
+            document.getElementById('test-text').value = "This is a comprehensive test to utilize sophisticated algorithms for demonstration purposes. Hello world, this text contains various features to test our system's capabilities.";
+            showToast('Example text loaded');
+        }
+        
+        async function testFeature(action) {
+            const text = document.getElementById('test-text').value.trim();
+            if (!text) {
+                showToast('Please enter some text first', 'error');
+                return;
+            }
+            
+            setStatus('feature', `Testing ${action}...`, 'loading');
+            document.getElementById(`btn-${action}`).disabled = true;
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/text/process`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text, action })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    setStatus('feature', `✅ ${action} completed successfully`, 'success');
+                    
+                    let resultHTML = `
+                        <h4>📤 Original Text:</h4>
+                        <p><em>${data.data.original_text}</em></p>
+                        <h4>📥 Processed Text:</h4>
+                        <p><strong>${data.data.processed_text}</strong></p>
+                    `;
+                    
+                    if (action === 'analyze' && data.data.analysis) {
+                        const analysis = data.data.analysis;
+                        resultHTML += `
+                            <h4>📊 Analysis Details:</h4>
+                            <ul>
+                                <li><strong>Word Count:</strong> ${analysis.word_count}</li>
+                                <li><strong>Sentence Count:</strong> ${analysis.sentence_count}</li>
+                                <li><strong>Reading Level:</strong> ${analysis.reading_level.description}</li>
+                                <li><strong>Complexity Score:</strong> ${analysis.complexity_score}%</li>
+                                <li><strong>Sentiment:</strong> ${analysis.sentiment}</li>
+                                ${analysis.difficult_words?.length ? `<li><strong>Difficult Words:</strong> ${analysis.difficult_words.join(', ')}</li>` : ''}
+                                ${analysis.readability_notes?.length ? `<li><strong>Notes:</strong> ${analysis.readability_notes.join('; ')}</li>` : ''}
+                            </ul>
+                        `;
+                    }
+                    
+                    setResult('feature', resultHTML);
+                    showToast(`${action} feature working correctly! ✅`);
+                } else {
+                    throw new Error(data.error || 'Unknown error');
+                }
+                
+            } catch (error) {
+                setStatus('feature', `❌ ${action} failed: ${error.message}`, 'error-text');
+                setResult('feature', `<strong>Error:</strong> ${error.message}`, true);
+                showToast(`${action} feature failed: ${error.message}`, 'error');
+            } finally {
+                document.getElementById(`btn-${action}`).disabled = false;
+            }
+        }
+        
+        function testTTS() {
+            const text = document.getElementById('test-text').value.trim() || "This is a test of text to speech functionality.";
+            
+            setStatus('tts', 'Testing text-to-speech...', 'loading');
+            
+            if (!('speechSynthesis' in window)) {
+                setStatus('tts', '❌ TTS not supported in this browser', 'error-text');
+                setResult('tts', 'speechSynthesis API is not available in this browser', true);
+                return;
+            }
+            
+            try {
+                speechSynthesis.cancel(); // Stop any ongoing speech
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                const voices = speechSynthesis.getVoices();
+                
+                utterance.onstart = () => {
+                    setStatus('tts', '🔊 Speaking...', 'success');
+                    setResult('tts', `
+                        <p><strong>✅ TTS started successfully!</strong></p>
+                        <p><strong>Text being read:</strong> "${text}"</p>
+                        <p><strong>Available voices:</strong> ${voices.length}</p>
+                        <p><strong>Selected voice:</strong> ${utterance.voice?.name || 'Default system voice'}</p>
+                    `);
+                };
+                
+                utterance.onend = () => {
+                    setStatus('tts', '✅ TTS completed successfully', 'success');
+                    showToast('TTS test completed! ✅');
+                };
+                
+                utterance.onerror = (event) => {
+                    setStatus('tts', `❌ TTS error: ${event.error}`, 'error-text');
+                    setResult('tts', `<strong>TTS Error:</strong> ${event.error}`, true);
+                    showToast(`TTS failed: ${event.error}`, 'error');
+                };
+                
+                speechSynthesis.speak(utterance);
+                showToast('TTS test started...');
+                
+            } catch (error) {
+                setStatus('tts', `❌ TTS failed: ${error.message}`, 'error-text');
+                setResult('tts', `<strong>Error:</strong> ${error.message}`, true);
+                showToast(`TTS error: ${error.message}`, 'error');
+            }
+        }
+        
+        function stopTTS() {
+            speechSynthesis.cancel();
+            setStatus('tts', '⏹️ TTS stopped', 'success');
+            showToast('TTS stopped');
+        }
+        
+        function checkTTSSupport() {
+            const supported = 'speechSynthesis' in window;
+            const voices = supported ? speechSynthesis.getVoices() : [];
+            
+            setStatus('tts', supported ? '✅ TTS supported' : '❌ TTS not supported', supported ? 'success' : 'error-text');
+            setResult('tts', `
+                <p><strong>speechSynthesis API:</strong> ${supported ? '✅ Available' : '❌ Not available'}</p>
+                ${supported ? `
+                    <p><strong>Available voices:</strong> ${voices.length}</p>
+                    ${voices.length > 0 ? `
+                        <ul>
+                            ${voices.slice(0, 5).map(voice => `<li>${voice.name} (${voice.lang})</li>`).join('')}
+                            ${voices.length > 5 ? `<li><em>... and ${voices.length - 5} more</em></li>` : ''}
+                        </ul>
+                    ` : '<p><em>No voices loaded yet (they may load after first use)</em></p>'}
+                ` : ''}
+            `);
+        }
+        
+        function testSettingsSave() {
+            setStatus('settings', 'Testing settings save...', 'loading');
+            
+            try {
+                const testSettings = {
+                    fontSize: 'large',
+                    language: 'es',
+                    voiceRate: 1.5,
+                    darkMode: true
+                };
+                
+                localStorage.setItem('accessibleTextSettings', JSON.stringify(testSettings));
+                const saved = JSON.parse(localStorage.getItem('accessibleTextSettings'));
+                
+                if (JSON.stringify(saved) === JSON.stringify(testSettings)) {
+                    setStatus('settings', '✅ Settings save working', 'success');
+                    setResult('settings', `
+                        <p><strong>✅ Settings successfully saved to localStorage</strong></p>
+                        <p><strong>Saved settings:</strong></p>
+                        <pre>${JSON.stringify(saved, null, 2)}</pre>
+                    `);
+                    showToast('Settings save test passed! ✅');
+                } else {
+                    throw new Error('Saved settings do not match');
+                }
+                
+            } catch (error) {
+                setStatus('settings', `❌ Settings save failed: ${error.message}`, 'error-text');
+                setResult('settings', `<strong>Error:</strong> ${error.message}`, true);
+                showToast(`Settings save failed: ${error.message}`, 'error');
+            }
+        }
+        
+        function testSettingsLoad() {
+            setStatus('settings', 'Testing settings load...', 'loading');
+            
+            try {
+                const saved = localStorage.getItem('accessibleTextSettings');
+                if (saved) {
+                    const settings = JSON.parse(saved);
+                    setStatus('settings', '✅ Settings load working', 'success');
+                    setResult('settings', `
+                        <p><strong>✅ Settings successfully loaded from localStorage</strong></p>
+                        <p><strong>Current settings:</strong></p>
+                        <pre>${JSON.stringify(settings, null, 2)}</pre>
+                    `);
+                    showToast('Settings load test passed! ✅');
+                } else {
+                    setStatus('settings', '⚠️ No settings found', 'loading');
+                    setResult('settings', '<p>No settings found in localStorage (this is normal for first use)</p>');
+                    showToast('No saved settings found');
+                }
+                
+            } catch (error) {
+                setStatus('settings', `❌ Settings load failed: ${error.message}`, 'error-text');
+                setResult('settings', `<strong>Error:</strong> ${error.message}`, true);
+                showToast(`Settings load failed: ${error.message}`, 'error');
+            }
+        }
+        
+        function testFontSizeChange() {
+            setStatus('settings', 'Testing font size change...', 'loading');
+            
+            try {
+                document.body.className = 'font-large';
+                setTimeout(() => {
+                    document.body.className = 'font-medium';
+                    setStatus('settings', '✅ Font size change working', 'success');
+                    setResult('settings', '<p><strong>✅ Font size changes applied successfully</strong></p><p>Body class was changed to test font sizing</p>');
+                    showToast('Font size test passed! ✅');
+                }, 1000);
+                
+            } catch (error) {
+                setStatus('settings', `❌ Font size test failed: ${error.message}`, 'error-text');
+                setResult('settings', `<strong>Error:</strong> ${error.message}`, true);
+                showToast(`Font size test failed: ${error.message}`, 'error');
+            }
+        }
+        
+        function testContrastChange() {
+            setStatus('settings', 'Testing contrast change...', 'loading');
+            
+            try {
+                document.body.classList.add('high-contrast');
+                setTimeout(() => {
+                    document.body.classList.remove('high-contrast');
+                    document.body.classList.add('dark-mode');
+                    setTimeout(() => {
+                        document.body.classList.remove('dark-mode');
+                        setStatus('settings', '✅ Contrast changes working', 'success');
+                        setResult('settings', '<p><strong>✅ Contrast changes applied successfully</strong></p><p>High contrast and dark mode classes were tested</p>');
+                        showToast('Contrast test passed! ✅');
+                    }, 1000);
+                }, 1000);
+                
+            } catch (error) {
+                setStatus('settings', `❌ Contrast test failed: ${error.message}`, 'error-text');
+                setResult('settings', `<strong>Error:</strong> ${error.message}`, true);
+                showToast(`Contrast test failed: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testBackendHealth() {
+            setStatus('api', 'Checking backend health...', 'loading');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/health`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.json();
+                setStatus('api', '✅ Backend healthy', 'success');
+                setResult('api', `
+                    <p><strong>✅ Backend server is healthy</strong></p>
+                    <p><strong>Status:</strong> ${data.status}</p>
+                    <p><strong>Uptime:</strong> ${Math.round(data.uptime)} seconds</p>
+                    <p><strong>Environment:</strong> ${data.environment}</p>
+                    <p><strong>Version:</strong> ${data.version}</p>
+                `);
+                showToast('Backend health check passed! ✅');
+                
+            } catch (error) {
+                setStatus('api', `❌ Backend unhealthy: ${error.message}`, 'error-text');
+                setResult('api', `<strong>Backend Error:</strong> ${error.message}`, true);
+                showToast(`Backend health check failed: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testAPIEndpoint() {
+            setStatus('api', 'Testing API directly...', 'loading');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/text/process`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        text: "Hello world", 
+                        action: "simplify" 
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    setStatus('api', '✅ API endpoint working', 'success');
+                    setResult('api', `
+                        <p><strong>✅ API endpoint responding correctly</strong></p>
+                        <p><strong>Original:</strong> ${data.data.original_text}</p>
+                        <p><strong>Processed:</strong> ${data.data.processed_text}</p>
+                        <p><strong>Action:</strong> ${data.data.action}</p>
+                        <p><strong>Processing time:</strong> ${Math.round(data.data.processing_time_ms)}ms</p>
+                    `);
+                    showToast('API endpoint test passed! ✅');
+                } else {
+                    throw new Error(data.error || 'API returned success: false');
+                }
+                
+            } catch (error) {
+                setStatus('api', `❌ API test failed: ${error.message}`, 'error-text');
+                setResult('api', `<strong>API Error:</strong> ${error.message}`, true);
+                showToast(`API test failed: ${error.message}`, 'error');
+            }
+        }
+        
+        // Load voices when page loads
+        window.addEventListener('load', () => {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.getVoices();
+                speechSynthesis.addEventListener('voiceschanged', () => {
+                    console.log('Voices loaded:', speechSynthesis.getVoices().length);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>📱 Accessible Text Reader - Mobile</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="mobile-container">
+        <!-- Mobile Status Bar -->
+        <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="status-icons">
+                <span class="signal">📶</span>
+                <span class="wifi">📶</span>
+                <span class="battery">🔋100%</span>
+            </div>
+        </div>
+
+        <!-- App Header -->
+        <header class="app-header">
+            <h1>📱 Accessible Text Reader</h1>
+            <p>Making text easier to read and understand</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="bottom-nav" id="bottomNav">
+            <button class="nav-btn active" onclick="showScreen('home')" id="homeBtn">
+                🏠<br><span>Home</span>
+            </button>
+            <button class="nav-btn" onclick="showScreen('reader')" id="readerBtn">
+                📖<br><span>Reader</span>
+            </button>
+            <button class="nav-btn" onclick="showScreen('settings')" id="settingsBtn">
+                ⚙️<br><span>Settings</span>
+            </button>
+        </nav>
+
+        <!-- Main Content Container -->
+        <main class="main-content">
+            
+            <!-- Home Screen -->
+            <div class="screen active" id="homeScreen">
+                <div class="welcome-section">
+                    <h2>Welcome! 👋</h2>
+                    <p>Choose how you'd like to improve your text:</p>
+                </div>
+                
+                <div class="feature-grid">
+                    <button class="feature-card" onclick="selectFeature('simplify')">
+                        <div class="feature-icon">✨</div>
+                        <h3>Simplify Text</h3>
+                        <p>Make complex text easier to read</p>
+                    </button>
+                    
+                    <button class="feature-card" onclick="selectFeature('rewrite')">
+                        <div class="feature-icon">📝</div>
+                        <h3>Rewrite Text</h3>
+                        <p>Get a clearer version of your text</p>
+                    </button>
+                    
+                    <button class="feature-card" onclick="selectFeature('translate')">
+                        <div class="feature-icon">🌍</div>
+                        <h3>Translate Text</h3>
+                        <p>Convert text to another language</p>
+                    </button>
+                    
+                    <button class="feature-card" onclick="selectFeature('proofread')">
+                        <div class="feature-icon">✏️</div>
+                        <h3>Proofread Text</h3>
+                        <p>Fix grammar and spelling errors</p>
+                    </button>
+                    
+                    <button class="feature-card" onclick="selectFeature('analyze')">
+                        <div class="feature-icon">📊</div>
+                        <h3>Analyze Text</h3>
+                        <p>Get reading level and complexity info</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Reader Screen -->
+            <div class="screen" id="readerScreen">
+                <div class="reader-header">
+                    <button class="back-btn" onclick="showScreen('home')">← Back</button>
+                    <h2 id="readerTitle">Text Processing</h2>
+                </div>
+                
+                <div class="input-section">
+                    <label for="textInput">Enter your text:</label>
+                    <textarea 
+                        id="textInput" 
+                        placeholder="Paste or type text here to make it easier to read..."
+                        rows="6"
+                    ></textarea>
+                    
+                    <div class="input-actions">
+                        <button class="secondary-btn" onclick="clearText()">🗑️ Clear</button>
+                        <button class="secondary-btn" onclick="pasteText()">📋 Paste</button>
+                    </div>
+                </div>
+                
+                <div class="action-section">
+                    <div class="action-buttons" id="actionButtons">
+                        <button class="action-btn" onclick="processText('simplify')">
+                            <span class="loading hidden" id="loadingSimplify">⏳</span>
+                            <span class="btn-text">✨ Simplify</span>
+                        </button>
+                        <button class="action-btn" onclick="processText('rewrite')">
+                            <span class="loading hidden" id="loadingRewrite">⏳</span>
+                            <span class="btn-text">📝 Rewrite</span>
+                        </button>
+                        <button class="action-btn" onclick="processText('translate')">
+                            <span class="loading hidden" id="loadingTranslate">⏳</span>
+                            <span class="btn-text">🌍 Translate</span>
+                        </button>
+                        <button class="action-btn" onclick="processText('proofread')">
+                            <span class="loading hidden" id="loadingProofread">⏳</span>
+                            <span class="btn-text">✏️ Proofread</span>
+                        </button>
+                        <button class="action-btn" onclick="processText('analyze')">
+                            <span class="loading hidden" id="loadingAnalyze">⏳</span>
+                            <span class="btn-text">📊 Analyze</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="results-section hidden" id="resultsSection">
+                    <div class="result-card">
+                        <h3>Results:</h3>
+                        <div id="resultText" class="result-text"></div>
+                        <div id="analysisResults" class="analysis-results hidden"></div>
+                        
+                        <div class="result-actions">
+                            <button class="result-btn" onclick="readAloud()">🔊 Read</button>
+                            <button class="result-btn" onclick="copyResult()">📋 Copy</button>
+                            <button class="result-btn" onclick="stopReading()">⏹️ Stop</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="speech-controls">
+                    <button class="speech-btn" onclick="readOriginal()">🔊 Read Original</button>
+                    <button class="speech-btn" onclick="stopReading()">⏹️ Stop All</button>
+                </div>
+            </div>
+
+            <!-- Settings Screen -->
+            <div class="screen" id="settingsScreen">
+                <div class="settings-header">
+                    <h2>⚙️ Settings</h2>
+                </div>
+                
+                <div class="settings-content">
+                    <div class="setting-group">
+                        <h3>📱 Display</h3>
+                        <div class="setting-item">
+                            <label for="fontSize">Font Size:</label>
+                            <select id="fontSize" onchange="updateFontSize()">
+                                <option value="14">Small (14px)</option>
+                                <option value="16" selected>Medium (16px)</option>
+                                <option value="18">Large (18px)</option>
+                                <option value="20">Extra Large (20px)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h3>🔊 Speech</h3>
+                        <div class="setting-item">
+                            <label for="speechRate">Speech Rate:</label>
+                            <select id="speechRate" onchange="updateSpeechRate()">
+                                <option value="0.6">Slow (0.6x)</option>
+                                <option value="0.8" selected>Normal (0.8x)</option>
+                                <option value="1.0">Fast (1.0x)</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label for="autoRead">Auto-read results:</label>
+                            <input type="checkbox" id="autoRead" onchange="updateAutoRead()">
+                        </div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h3>ℹ️ About</h3>
+                        <div class="about-info">
+                            <h4>Accessible Text Reader Mobile</h4>
+                            <p>Version 1.0.0</p>
+                            <p>Making text easier to read and understand for everyone.</p>
+                            <button class="reset-btn" onclick="resetSettings()">🔄 Reset to Defaults</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

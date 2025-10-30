@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "Web Accessibility AI Assistant",
+  "version": "1.0.0",
+  "description": "Enhances web accessibility using Chrome's Built-in AI APIs for text simplification, translation, proofreading, and reading assistance.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Web Accessibility AI Assistant"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "generativeContent"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"],
+      "css": ["styles.css"]
+    }
+  ]
+}

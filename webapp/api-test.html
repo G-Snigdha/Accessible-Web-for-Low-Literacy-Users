@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Frontend API Test</title>
+</head>
+<body>
+    <h1>Frontend API Connection Test</h1>
+    
+    <div>
+        <h2>Test Simplify</h2>
+        <textarea id="testInput" rows="3" cols="80">The comprehensive utilization of sophisticated technological infrastructure facilitates substantial data processing requirements.</textarea><br><br>
+        <button onclick="testSimplify()">Test Elementary Simplify</button>
+        <button onclick="testTranslate()">Test Translation</button>
+        <br><br>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        async function testSimplify() {
+            const text = document.getElementById('testInput').value;
+            const resultsDiv = document.getElementById('results');
+            
+            resultsDiv.innerHTML = '<p>Testing API...</p>';
+            
+            try {
+                console.log('Sending request with text:', text);
+                
+                const requestBody = {
+                    text: text,
+                    action: 'simplify',
+                    options: {
+                        level: 'elementary'
+                    }
+                };
+                
+                console.log('Request body:', requestBody);
+                
+                const response = await fetch('http://localhost:3001/api/text/process', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                console.log('Response status:', response.status);
+                console.log('Response headers:', [...response.headers.entries()]);
+                
+                const data = await response.json();
+                console.log('Full API Response:', data);
+                console.log('Success:', data.success);
+                console.log('Data object:', data.data);
+                console.log('Processed text:', data.data?.processed_text);
+                console.log('Original text:', data.data?.original_text);
+                
+                if (data.success) {
+                    resultsDiv.innerHTML = `
+                        <h3>✅ API Working!</h3>
+                        <p><strong>Success:</strong> ${data.success}</p>
+                        <p><strong>Original:</strong> ${data.data.original_text}</p>
+                        <p><strong>Processed:</strong> ${data.data.processed_text}</p>
+                        <p><strong>Same text?:</strong> ${data.data.original_text === data.data.processed_text ? 'YES - NO CHANGES' : 'NO - TEXT WAS CHANGED'}</p>
+                        <hr>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    resultsDiv.innerHTML = `<p style="color: red;">❌ Error: ${data.error}</p>`;
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+                resultsDiv.innerHTML = `<p style="color: red;">❌ Network Error: ${error.message}</p>`;
+            }
+        }
+
+        async function testTranslate() {
+            const text = "Hello world, how are you today?";
+            const resultsDiv = document.getElementById('results');
+            
+            resultsDiv.innerHTML = '<p>Testing Translation API...</p>';
+            
+            try {
+                const requestBody = {
+                    text: text,
+                    action: 'translate',
+                    options: {
+                        from: 'en',
+                        to: 'es'
+                    }
+                };
+                
+                console.log('Translation request:', requestBody);
+                
+                const response = await fetch('http://localhost:3001/api/text/process', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                const data = await response.json();
+                console.log('Translation response:', data);
+                
+                if (data.success) {
+                    resultsDiv.innerHTML = `
+                        <h3>✅ Translation API Working!</h3>
+                        <p><strong>Original (EN):</strong> ${data.data.original_text}</p>
+                        <p><strong>Translated (ES):</strong> ${data.data.processed_text}</p>
+                        <p><strong>Same text?:</strong> ${data.data.original_text === data.data.processed_text ? 'YES - NO TRANSLATION' : 'NO - TEXT WAS TRANSLATED'}</p>
+                        <hr>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    resultsDiv.innerHTML = `<p style="color: red;">❌ Error: ${data.error}</p>`;
+                }
+            } catch (error) {
+                console.error('Translation error:', error);
+                resultsDiv.innerHTML = `<p style="color: red;">❌ Network Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

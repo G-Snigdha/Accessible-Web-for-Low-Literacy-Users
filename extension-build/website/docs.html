@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - Web Accessibility AI Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#1d4ed8'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img class="h-8 w-8" src="../ai/icons/icon128.png" alt="Logo">
+                        <span class="ml-2 text-xl font-bold text-gray-900">Web Accessibility AI</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html#features" class="text-gray-700 hover:text-primary">Features</a>
+                    <a href="index.html#installation" class="text-gray-700 hover:text-primary">Installation</a>
+                    <a href="index.html#demo" class="text-gray-700 hover:text-primary">Demo</a>
+                    <a href="docs.html" class="text-primary font-medium">Documentation</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Documentation Content -->
+    <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div class="prose prose-blue max-w-none">
+            <h1 class="text-4xl font-bold text-gray-900 mb-8">Documentation</h1>
+
+            <!-- Getting Started -->
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Getting Started</h2>
+                <div class="bg-white shadow sm:rounded-lg p-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">System Requirements</h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-600">
+                        <li>Google Chrome browser (version 88 or later)</li>
+                        <li>Active internet connection</li>
+                        <li>Permissions for accessing selected text and storage</li>
+                    </ul>
+
+                    <h3 class="text-lg font-medium text-gray-900 mt-6 mb-4">Installation Steps</h3>
+                    <ol class="list-decimal list-inside space-y-2 text-gray-600">
+                        <li>Download the extension package</li>
+                        <li>Open Chrome and go to chrome://extensions/</li>
+                        <li>Enable "Developer mode"</li>
+                        <li>Click "Load unpacked" and select the extension directory</li>
+                        <li>Verify the extension icon appears in your toolbar</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Features Documentation -->
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Features</h2>
+                
+                <!-- Text Simplification -->
+                <div class="bg-white shadow sm:rounded-lg p-6 mb-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Text Simplification</h3>
+                    <p class="text-gray-600 mb-4">
+                        The text simplification feature uses Chrome's Built-in AI to convert complex text into easier-to-understand language.
+                    </p>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="text-sm font-medium text-gray-900 mb-2">How to use:</h4>
+                        <ol class="list-decimal list-inside text-sm text-gray-600">
+                            <li>Select text on any webpage</li>
+                            <li>Click the extension icon</li>
+                            <li>Click "Simplify Text" or use Ctrl/Cmd + Shift + S</li>
+                            <li>Review the simplified version in the overlay</li>
+                            <li>Click "Apply" to replace the original text</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Translation -->
+                <div class="bg-white shadow sm:rounded-lg p-6 mb-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Translation</h3>
+                    <p class="text-gray-600 mb-4">
+                        Translate selected text into multiple languages while maintaining context and meaning.
+                    </p>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="text-sm font-medium text-gray-900 mb-2">How to use:</h4>
+                        <ol class="list-decimal list-inside text-sm text-gray-600">
+                            <li>Select text to translate</li>
+                            <li>Click the extension icon</li>
+                            <li>Click "Translate" or use Ctrl/Cmd + Shift + T</li>
+                            <li>Choose your target language</li>
+                            <li>Review and apply the translation</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Proofreading -->
+                <div class="bg-white shadow sm:rounded-lg p-6 mb-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Proofreading</h3>
+                    <p class="text-gray-600 mb-4">
+                        AI-powered proofreading to improve text quality and correctness.
+                    </p>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="text-sm font-medium text-gray-900 mb-2">How to use:</h4>
+                        <ol class="list-decimal list-inside text-sm text-gray-600">
+                            <li>Select text to proofread</li>
+                            <li>Click the extension icon</li>
+                            <li>Click "Proofread" or use Ctrl/Cmd + Shift + P</li>
+                            <li>Review suggested corrections</li>
+                            <li>Apply the changes</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Text-to-Speech -->
+                <div class="bg-white shadow sm:rounded-lg p-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Text-to-Speech</h3>
+                    <p class="text-gray-600 mb-4">
+                        Convert text to natural-sounding speech with multi-language support.
+                    </p>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="text-sm font-medium text-gray-900 mb-2">How to use:</h4>
+                        <ol class="list-decimal list-inside text-sm text-gray-600">
+                            <li>Select text to read</li>
+                            <li>Click the extension icon</li>
+                            <li>Click "Read Aloud" or use Ctrl/Cmd + Shift + R</li>
+                            <li>Use playback controls to pause/resume</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Keyboard Shortcuts -->
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Keyboard Shortcuts</h2>
+                <div class="bg-white shadow sm:rounded-lg p-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <code class="text-sm font-mono">Ctrl/Cmd + Shift + S</code>
+                            <p class="mt-2 text-gray-600">Simplify selected text</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <code class="text-sm font-mono">Ctrl/Cmd + Shift + T</code>
+                            <p class="mt-2 text-gray-600">Translate selected text</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <code class="text-sm font-mono">Ctrl/Cmd + Shift + P</code>
+                            <p class="mt-2 text-gray-600">Proofread selected text</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <code class="text-sm font-mono">Ctrl/Cmd + Shift + R</code>
+                            <p class="mt-2 text-gray-600">Read selected text aloud</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Troubleshooting -->
+            <section>
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Troubleshooting</h2>
+                <div class="bg-white shadow sm:rounded-lg p-6">
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">Extension Not Working</h3>
+                            <ul class="list-disc list-inside text-gray-600">
+                                <li>Verify Chrome is up to date</li>
+                                <li>Check if the extension is enabled</li>
+                                <li>Try reloading the webpage</li>
+                                <li>Reinstall the extension if necessary</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">Features Not Responding</h3>
+                            <ul class="list-disc list-inside text-gray-600">
+                                <li>Ensure text is properly selected</li>
+                                <li>Check internet connectivity</li>
+                                <li>Verify permissions are granted</li>
+                                <li>Clear browser cache and reload</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 mt-12">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="mt-8 border-t border-gray-200 pt-8 md:flex md:items-center md:justify-between">
+                <div class="flex space-x-6 md:order-2">
+                    <a href="https://github.com" class="text-gray-400 hover:text-gray-500">
+                        <span class="sr-only">GitHub</span>
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                </div>
+                <p class="mt-8 text-base text-gray-400 md:mt-0 md:order-1">
+                    &copy; 2025 Web Accessibility AI Assistant. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

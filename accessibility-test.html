@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test All Accessibility Features</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .test-content {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+        }
+        h2 {
+            color: #2c3e50;
+        }
+        .instructions {
+            color: #666;
+            font-style: italic;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e8f5e9;
+            border-radius: 4px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test All Accessibility Features</h1>
+    <p>Follow these steps to test all features of the accessibility extension:</p>
+
+    <div class="test-section">
+        <h2>Step 1: Extension Installation</h2>
+        <ol>
+            <li>Verify the extension is installed in Chrome</li>
+            <li>Look for the extension icon in the toolbar</li>
+            <li>Make sure it's enabled</li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h2>Step 2: Text Simplification</h2>
+        <p class="instructions">Test each simplification level with these samples:</p>
+        
+        <div class="test-content">
+            <h3>Complex Technical Text:</h3>
+            <p>The implementation necessitates utilizing complex algorithms to facilitate the computation of quantum mechanical parameters. Subsequently, the system demonstrates approximately sufficient performance metrics for practical applications.</p>
+            
+            <h3>Complex Academic Text:</h3>
+            <p>The methodology encompasses numerous theoretical frameworks that necessitate comprehensive analysis. The research demonstrates significant correlations between multiple interdependent variables in the experimental context.</p>
+            
+            <p class="instructions">How to test:</p>
+            <ol>
+                <li>Select either text above</li>
+                <li>Right-click and choose:
+                    <ul>
+                        <li>🟢 Basic Level - For simplest version</li>
+                        <li>🟡 Moderate Level - For balanced simplification</li>
+                        <li>🔵 Detailed Level - For technical explanation</li>
+                    </ul>
+                </li>
+                <li>Compare the results</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Step 3: Translation</h2>
+        <p class="instructions">Test translation with these common phrases:</p>
+        
+        <div class="test-content">
+            <p>1. Hello, how are you today?</p>
+            <p>2. Thank you very much for your help.</p>
+            <p>3. Good morning! What is your name?</p>
+            <p>4. Please help me understand this book.</p>
+            <p>5. Yes, I would like some water and food.</p>
+            
+            <p class="instructions">How to test:</p>
+            <ol>
+                <li>Select any phrase above</li>
+                <li>Right-click and choose 🌍 Translate</li>
+                <li>Select target language:
+                    <ul>
+                        <li>Hindi (हिंदी)</li>
+                        <li>Tamil (தமிழ்)</li>
+                        <li>Telugu (తెలుగు)</li>
+                    </ul>
+                </li>
+                <li>Check translation accuracy</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Step 4: Text-to-Speech</h2>
+        <p class="instructions">Test the read-aloud feature:</p>
+        
+        <div class="test-content">
+            <p>Welcome to our accessibility testing page! This is a sample text that you can use to test the text-to-speech feature. Feel free to select any portion of this text and have it read aloud.</p>
+            
+            <p class="instructions">How to test:</p>
+            <ol>
+                <li>Select the text above</li>
+                <li>Right-click and choose 🔊 Read Aloud</li>
+                <li>Listen to the audio output</li>
+                <li>Try the playback controls:
+                    <ul>
+                        <li>⏸️ Pause Reading</li>
+                        <li>▶️ Resume Reading</li>
+                        <li>⏹️ Stop Reading</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Step 5: Combined Features Test</h2>
+        <p class="instructions">Test multiple features together with this longer text:</p>
+        
+        <div class="test-content">
+            <p>The implementation of accessibility features requires careful consideration of user needs. The system must facilitate easy access while maintaining functionality. Approximately 15% of users demonstrate difficulty with complex interfaces. Therefore, we utilize simplified approaches to enhance user experience.</p>
+            
+            <p>Good morning! Welcome to our website. Please help us understand your needs. We want to make sure everyone can access and comprehend the information easily.</p>
+            
+            <p class="instructions">Suggested test sequence:</p>
+            <ol>
+                <li>First, simplify the text (try each level)</li>
+                <li>Then, translate the simplified version</li>
+                <li>Finally, use text-to-speech on both original and translated versions</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Expected Results</h2>
+        <ul>
+            <li><strong>Text Simplification:</strong>
+                <ul>
+                    <li>🟢 Basic: Should show very simple words and short sentences</li>
+                    <li>🟡 Moderate: Should balance simplicity with detail</li>
+                    <li>🔵 Detailed: Should add explanations for technical terms</li>
+                </ul>
+            </li>
+            <li><strong>Translation:</strong>
+                <ul>
+                    <li>Should show proper Hindi/Tamil/Telugu text</li>
+                    <li>Should include language emoji (🇮🇳)</li>
+                    <li>Should maintain sentence structure</li>
+                </ul>
+            </li>
+            <li><strong>Text-to-Speech:</strong>
+                <ul>
+                    <li>Should speak clearly and naturally</li>
+                    <li>Should handle pausing and resuming</li>
+                    <li>Should maintain proper pronunciation</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>Troubleshooting</h2>
+        <ul>
+            <li>If features don't appear in context menu, try reloading the page</li>
+            <li>If translations aren't showing, check if text is selected properly</li>
+            <li>If text-to-speech doesn't work, check your system's audio settings</li>
+            <li>If simplification doesn't change the text, try selecting a different portion</li>
+        </ul>
+    </div>
+</body>
+</html>

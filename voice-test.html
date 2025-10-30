@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Selection Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .voice-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        select {
+            padding: 8px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎙️ Voice Selection Test Tool</h1>
+    
+    <div class="test-card">
+        <h2>Step 1: Check Available Voices</h2>
+        <button onclick="checkVoices()">Analyze System Voices</button>
+        <div id="voiceList" class="voice-info"></div>
+    </div>
+
+    <div class="test-card">
+        <h2>Step 2: Test Voice Selection</h2>
+        <input type="text" id="testText" placeholder="Enter text to speak..." value="Hello, this is a test of the voice selection system.">
+        
+        <div>
+            <label>Voice Type:</label>
+            <select id="voiceType">
+                <option value="default">Default</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Speed:</label>
+            <select id="speechSpeed">
+                <option value="0.5">0.5x</option>
+                <option value="1" selected>1x</option>
+                <option value="1.5">1.5x</option>
+                <option value="2">2x</option>
+            </select>
+        </div>
+
+        <button onclick="testVoice()">🔊 Test Voice Selection</button>
+        <button onclick="stopSpeech()">⏹️ Stop</button>
+        
+        <div id="testResults" class="voice-info"></div>
+    </div>
+
+    <div class="test-card">
+        <h2>Step 3: Quick Tests</h2>
+        <button onclick="testMaleVoice()">Test Male Voice</button>
+        <button onclick="testFemaleVoice()">Test Female Voice</button>
+        <button onclick="testDefaultVoice()">Test Default Voice</button>
+    </div>
+
+    <script>
+        // Voice detection functions (copied from your main app)
+        function isMaleVoice(voiceName) {
+            const name = voiceName.toLowerCase();
+            const maleIndicators = [
+                'male', 'man', 'boy',
+                'david', 'daniel', 'alex', 'tom', 'mike', 'john', 'aaron', 'bruce', 'fred', 
+                'jorge', 'junior', 'ralph', 'albert', 'thomas', 'james', 'robert', 'william',
+                'richard', 'joseph', 'christopher', 'matthew', 'anthony', 'mark', 'donald',
+                'steven', 'paul', 'andrew', 'joshua', 'kenneth', 'kevin', 'brian', 'george',
+                'edward', 'ronald', 'timothy', 'jason', 'jeffrey', 'ryan', 'jacob', 'gary',
+                'nicholas', 'eric', 'jonathan', 'stephen', 'larry', 'justin', 'scott',
+                'bad news', 'bahh', 'bells', 'boing', 'bubbles', 'cellos', 'deranged', 
+                'good news', 'hysterical', 'pipe organ', 'trinoids',
+                'male voice', 'man voice', 'gentleman', 'sir', 'mister', 'mr'
+            ];
+            return maleIndicators.some(indicator => name.includes(indicator));
+        }
+
+        function isFemaleVoice(voiceName) {
+            const name = voiceName.toLowerCase();
+            const femaleIndicators = [
+                'female', 'woman', 'girl', 
+                'samantha', 'susan', 'victoria', 'karen', 'anna', 'sara', 'kate', 'helen', 
+                'tessa', 'moira', 'fiona', 'veena', 'rishi', 'princess', 'alice', 'amelie', 
+                'carmit', 'damayanti', 'ioana', 'joana', 'kanya', 'kyoko', 'laura', 'lekha', 
+                'luciana', 'mariska', 'mei-jia', 'melina', 'milena', 'monica', 'nora', 
+                'paulina', 'petra', 'satu', 'sin-ji', 'ting-ting', 'xander', 'yelda', 
+                'yuna', 'zosia', 'zuzana',
+                'female voice', 'woman voice', 'lady', 'miss',
+                'marie', 'elena', 'sofia', 'isabella', 'maria', 'emma', 'olivia', 'chloe',
+                'zoe', 'amy', 'rachel', 'jennifer', 'jessica', 'lisa', 'michelle', 'nicole',
+                'stephanie', 'sarah', 'rebecca', 'laura', 'amanda', 'danielle', 'nancy'
+            ];
+            return femaleIndicators.some(indicator => name.includes(indicator));
+        }
+
+        async function getVoiceForType(voiceType = 'default') {
+            const voices = speechSynthesis.getVoices();
+            
+            if (voiceType === 'default') {
+                return voices[0];
+            }
+            
+            let selectedVoice = null;
+            
+            if (voiceType === 'male') {
+                selectedVoice = voices.find(v => isMaleVoice(v.name));
+            } else if (voiceType === 'female') {
+                selectedVoice = voices.find(v => isFemaleVoice(v.name));
+            }
+            
+            return selectedVoice || voices[0];
+        }
+
+        function checkVoices() {
+            const voices = speechSynthesis.getVoices();
+            const voiceList = document.getElementById('voiceList');
+            
+            if (!voices || voices.length === 0) {
+                voiceList.textContent = 'No voices available. Try refreshing the page.';
+                return;
+            }
+
+            let output = `Found ${voices.length} voices:\n\n`;
+            
+            const maleVoices = [];
+            const femaleVoices = [];
+            const unknownVoices = [];
+            
+            voices.forEach((voice, index) => {
+                const isMale = isMaleVoice(voice.name);
+                const isFemale = isFemaleVoice(voice.name);
+                const category = isFemale ? 'FEMALE' : isMale ? 'MALE' : 'UNKNOWN';
+                
+                const voiceInfo = `${index + 1}. ${voice.name} (${voice.lang}) - ${category}`;
+                
+                if (isFemale) femaleVoices.push(voiceInfo);
+                else if (isMale) maleVoices.push(voiceInfo);
+                else unknownVoices.push(voiceInfo);
+            });
+            
+            output += '🚹 MALE VOICES:\n';
+            output += maleVoices.length > 0 ? maleVoices.join('\n') + '\n\n' : 'None detected\n\n';
+            
+            output += '🚺 FEMALE VOICES:\n';
+            output += femaleVoices.length > 0 ? femaleVoices.join('\n') + '\n\n' : 'None detected\n\n';
+            
+            output += '❓ UNKNOWN VOICES:\n';
+            output += unknownVoices.length > 0 ? unknownVoices.join('\n') : 'None';
+            
+            voiceList.textContent = output;
+            
+            console.log('Voice Analysis Complete:', {
+                total: voices.length,
+                male: maleVoices.length,
+                female: femaleVoices.length,
+                unknown: unknownVoices.length
+            });
+        }
+
+        async function testVoice() {
+            const text = document.getElementById('testText').value;
+            const voiceType = document.getElementById('voiceType').value;
+            const speed = parseFloat(document.getElementById('speechSpeed').value);
+            const resultsDiv = document.getElementById('testResults');
+            
+            if (!text.trim()) {
+                alert('Please enter some text to test');
+                return;
+            }
+            
+            try {
+                speechSynthesis.cancel(); // Stop any current speech
+                
+                const selectedVoice = await getVoiceForType(voiceType);
+                
+                let results = `🔊 VOICE SELECTION TEST RESULTS:\n\n`;
+                results += `Requested Type: ${voiceType}\n`;
+                results += `Selected Voice: ${selectedVoice?.name || 'None'}\n`;
+                results += `Voice Language: ${selectedVoice?.lang || 'Unknown'}\n`;
+                results += `Speed: ${speed}x\n`;
+                results += `Text: "${text}"\n\n`;
+                
+                if (selectedVoice) {
+                    const detectedGender = isFemaleVoice(selectedVoice.name) ? 'Female' : 
+                                         isMaleVoice(selectedVoice.name) ? 'Male' : 'Unknown';
+                    results += `Detected Gender: ${detectedGender}\n`;
+                    
+                    if (voiceType === 'female' && !isFemaleVoice(selectedVoice.name)) {
+                        results += `⚠️ WARNING: Requested female voice but got ${detectedGender}\n`;
+                    }
+                    if (voiceType === 'male' && !isMaleVoice(selectedVoice.name)) {
+                        results += `⚠️ WARNING: Requested male voice but got ${detectedGender}\n`;
+                    }
+                }
+                
+                resultsDiv.textContent = results;
+                
+                // Actually speak the text
+                const utterance = new SpeechSynthesisUtterance(text);
+                if (selectedVoice) utterance.voice = selectedVoice;
+                utterance.rate = speed;
+                
+                speechSynthesis.speak(utterance);
+                
+                console.log('Voice test completed:', {
+                    requestedType: voiceType,
+                    selectedVoice: selectedVoice?.name,
+                    detectedGender: selectedVoice ? (isFemaleVoice(selectedVoice.name) ? 'Female' : isMaleVoice(selectedVoice.name) ? 'Male' : 'Unknown') : 'None'
+                });
+                
+            } catch (error) {
+                resultsDiv.textContent = `Error: ${error.message}`;
+                console.error('Voice test error:', error);
+            }
+        }
+
+        function stopSpeech() {
+            speechSynthesis.cancel();
+            document.getElementById('testResults').textContent = 'Speech stopped.';
+        }
+
+        function testMaleVoice() {
+            document.getElementById('voiceType').value = 'male';
+            document.getElementById('testText').value = 'This should be a male voice speaking.';
+            testVoice();
+        }
+
+        function testFemaleVoice() {
+            document.getElementById('voiceType').value = 'female';
+            document.getElementById('testText').value = 'This should be a female voice speaking.';
+            testVoice();
+        }
+
+        function testDefaultVoice() {
+            document.getElementById('voiceType').value = 'default';
+            document.getElementById('testText').value = 'This is the default system voice.';
+            testVoice();
+        }
+
+        // Auto-check voices when page loads
+        window.addEventListener('load', () => {
+            setTimeout(checkVoices, 1000); // Wait for voices to load
+        });
+    </script>
+</body>
+</html>

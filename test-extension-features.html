@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extension Feature Testing Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .test-section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .test-section h2 {
+            color: #667eea;
+            font-size: 24px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .test-section h3 {
+            color: #555;
+            font-size: 16px;
+            margin: 20px 0 10px;
+            font-weight: 600;
+        }
+        
+        .test-text {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px dashed #ddd;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .test-text:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .test-text::selection {
+            background: #667eea;
+            color: white;
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .instructions strong {
+            color: #1976d2;
+        }
+        
+        .feature-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #667eea;
+            color: white;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .complex-text {
+            line-height: 1.8;
+        }
+        
+        .highlight-hint {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 14px;
+            border: 1px solid #ffc107;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .test-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .test-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+        
+        .test-card h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌟 Extension Feature Testing</h1>
+            <p>Test all accessibility features by selecting text below</p>
+        </div>
+        
+        <div class="content">
+            <div class="instructions">
+                <strong>How to Test:</strong>
+                <ol style="margin: 10px 0 0 20px;">
+                    <li>Make sure the extension is installed and active</li>
+                    <li>Select any text below</li>
+                    <li>Right-click to see context menu options OR use the popup</li>
+                    <li>Try different features on different text samples</li>
+                </ol>
+            </div>
+            
+            <!-- Text Simplification Tests -->
+            <div class="test-section">
+                <h2>📝 Text Simplification <span class="feature-badge">3 Levels</span></h2>
+                
+                <h3>Complex Technical Text:</h3>
+                <div class="test-text complex-text">
+                    The implementation of quantum computing algorithms requires sophisticated mathematical frameworks that utilize superposition and entanglement phenomena. Contemporary researchers are attempting to facilitate the development of more robust quantum error correction mechanisms to enhance computational fidelity.
+                </div>
+                
+                <h3>Business Jargon:</h3>
+                <div class="test-text complex-text">
+                    We need to leverage our core competencies to synergize cross-functional paradigms and optimize our value proposition. This will facilitate stakeholder engagement and maximize our competitive advantage in the marketplace.
+                </div>
+                
+                <div class="highlight-hint">
+                    💡 <strong>Try:</strong> Select text → Right-click → Choose "Simplify Text" → Pick a level (Basic/Moderate/Detailed)
+                </div>
+            </div>
+            
+            <!-- Translation Tests -->
+            <div class="test-section">
+                <h2>🌍 Translation <span class="feature-badge">Hindi, Tamil, Telugu</span></h2>
+                
+                <div class="test-grid">
+                    <div class="test-card">
+                        <h4>Simple Greeting</h4>
+                        <p>Hello, how are you today?</p>
+                    </div>
+                    
+                    <div class="test-card">
+                        <h4>Common Phrases</h4>
+                        <p>Thank you very much. Please help me. Good morning!</p>
+                    </div>
+                    
+                    <div class="test-card">
+                        <h4>Questions</h4>
+                        <p>What is your name? Where are you going? When will you come?</p>
+                    </div>
+                    
+                    <div class="test-card">
+                        <h4>Daily Words</h4>
+                        <p>food, water, book, read, write, understand, help, today, tomorrow</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-hint">
+                    💡 <strong>Try:</strong> Select text → Right-click → "Translate" → Choose language (Hindi/Tamil/Telugu)
+                </div>
+            </div>
+            
+            <!-- Text-to-Speech Tests -->
+            <div class="test-section">
+                <h2>🔊 Text-to-Speech <span class="feature-badge">Read Aloud</span></h2>
+                
+                <h3>Short Sentence:</h3>
+                <div class="test-text">
+                    Welcome to the accessibility testing page.
+                </div>
+                
+                <h3>Longer Paragraph:</h3>
+                <div class="test-text complex-text">
+                    Artificial intelligence is transforming how we interact with technology. From voice assistants to recommendation systems, AI is becoming increasingly integrated into our daily lives. These systems help us find information, make decisions, and automate repetitive tasks.
+                </div>
+                
+                <h3>Numbers and Special Characters:</h3>
+                <div class="test-text">
+                    The year 2025 marks 100 years since the invention. Cost: $50.99. Time: 3:45 PM. Phone: 555-1234.
+                </div>
+                
+                <div class="highlight-hint">
+                    💡 <strong>Try:</strong> Select text → Right-click → "Read Aloud" (Use Pause/Resume/Stop controls)
+                </div>
+            </div>
+            
+            <!-- Summarization Tests -->
+            <div class="test-section">
+                <h2>📄 Summarization <span class="feature-badge">Brief & Detailed</span></h2>
+                
+                <h3>Long Article:</h3>
+                <div class="test-text complex-text">
+                    Climate change is one of the most pressing challenges facing humanity today. Rising global temperatures are causing ice caps to melt, sea levels to rise, and weather patterns to become more extreme. Scientists around the world are working to develop solutions, from renewable energy sources like solar and wind power to carbon capture technologies. Governments are implementing policies to reduce greenhouse gas emissions, while individuals are making lifestyle changes to reduce their carbon footprint. International cooperation is essential, as climate change affects all nations regardless of borders. The transition to a sustainable future requires innovation, investment, and commitment from all sectors of society. Education plays a crucial role in raising awareness about environmental issues and empowering people to take action. While the challenges are significant, there is still hope if we act decisively and collectively to protect our planet for future generations.
+                </div>
+                
+                <h3>Technical Content:</h3>
+                <div class="test-text complex-text">
+                    Machine learning is a subset of artificial intelligence that enables computers to learn from data without being explicitly programmed. It uses algorithms that can identify patterns, make predictions, and improve their performance over time. There are three main types: supervised learning, where the algorithm learns from labeled data; unsupervised learning, where it finds patterns in unlabeled data; and reinforcement learning, where it learns through trial and error. Deep learning, a more advanced form of machine learning, uses neural networks with multiple layers to process complex data like images, speech, and text.
+                </div>
+                
+                <div class="highlight-hint">
+                    💡 <strong>Try:</strong> Select text → Right-click → Choose "Quick Summary" or "Detailed Summary"
+                </div>
+            </div>
+            
+            <!-- Mixed Content Test -->
+            <div class="test-section">
+                <h2>🎯 Mixed Content Testing</h2>
+                
+                <div class="test-text complex-text">
+                    <strong>Title:</strong> The Future of Education
+                    <br><br>
+                    <em>Education is evolving rapidly with technology.</em> Traditional classrooms are being supplemented with online learning platforms, virtual reality experiences, and AI-powered personalized tutoring systems. Students can now access world-class educational resources from anywhere with an internet connection.
+                    <br><br>
+                    <strong>Key Benefits:</strong>
+                    <ul style="margin: 10px 0 10px 30px;">
+                        <li>Flexibility to learn at your own pace</li>
+                        <li>Access to diverse perspectives and expertise</li>
+                        <li>Cost-effective compared to traditional education</li>
+                        <li>Immediate feedback and adaptive learning paths</li>
+                    </ul>
+                    <br>
+                    However, challenges remain, including ensuring equal access to technology and maintaining student engagement in digital environments.
+                </div>
+                
+                <div class="highlight-hint">
+                    💡 <strong>Try:</strong> Test all features on this mixed-content text to see how they handle formatting
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p><strong>🌟 Web Accessibility Helper Extension</strong></p>
+            <p style="margin-top: 10px;">Making web content accessible for everyone</p>
+            <p style="margin-top: 15px; font-size: 14px;">
+                Having issues? Check the browser console (F12) for error messages
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

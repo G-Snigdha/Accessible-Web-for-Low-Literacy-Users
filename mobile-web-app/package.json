@@ -1,0 +1,17 @@
+{
+  "name": "accessible-text-reader-mobile",
+  "version": "1.0.0",
+  "description": "Mobile web app for accessible text reader that runs in VS Code",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "keywords": ["accessibility", "mobile", "text-processing", "vscode"],
+  "author": "Accessible Text Reader Team",
+  "license": "MIT"
+}
