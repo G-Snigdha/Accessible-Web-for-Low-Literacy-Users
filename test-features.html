@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Accessibility Features Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        h2 {
+            color: #2c3e50;
+        }
+        .instructions {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎯 Accessibility Features Test Page</h1>
+    
+    <div class="test-section">
+        <h2>📝 Text Simplification Test</h2>
+        <div class="instructions">Select the text below and use the context menu to test different simplification levels:</div>
+        <p>The implementation of quantum computing requires a thorough understanding of complex mathematical principles including linear algebra and quantum mechanics.</p>
+    </div>
+
+    <div class="test-section">
+        <h2>🌍 Translation Test</h2>
+        <div class="instructions">Select the text below and try translating to different languages:</div>
+        <p>Hello! Welcome to our website. How are you? Thank you for visiting.</p>
+    </div>
+
+    <div class="test-section">
+        <h2>🔊 Text-to-Speech Test</h2>
+        <div class="instructions">Select this text to test the read aloud feature with pause/resume:</div>
+        <p>This is a test of the text-to-speech feature. You should be able to pause and resume this message.</p>
+    </div>
+
+    <div class="test-section">
+        <h2>📄 Summarization Test</h2>
+        <div class="instructions">Select this paragraph to test both brief and detailed summarization:</div>
+        <p>Artificial Intelligence has transformed many aspects of our daily lives. It helps us navigate through traffic, recommends products we might like, and even assists in medical diagnoses. The key advantage of AI is its ability to process vast amounts of data quickly. However, we must also consider important factors such as privacy and ethical use of this technology.</p>
+    </div>
+
+    <div id="result" style="margin-top: 20px; padding: 10px; background-color: #f0f0f0; display: none;">
+        <h3>Result will appear here</h3>
+    </div>
+
+    <script>
+        // Listen for messages from the extension
+        window.addEventListener('message', function(event) {
+            if (event.data.type === 'accessibilityResult') {
+                const resultDiv = document.getElementById('result');
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `
+                    <h3>${event.data.action} Result:</h3>
+                    <p>${event.data.text}</p>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+{
+  "name": "accessible-web-low-literacy",
+  "version": "1.0.0",
+  "description": "Accessible Web for Low-Literacy Users - Chrome Extension and PWA with AI-powered text simplification",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:web\" \"npm run dev:extension\"",
+    "dev:web": "vite --config vite.config.web.ts --host",
+    "dev:extension": "vite build --config vite.config.extension.ts --mode development --watch",
+    "build": "npm run build:web && npm run build:extension",
+    "build:web": "tsc && vite build --config vite.config.web.ts",
+    "build:extension": "tsc && vite build --config vite.config.extension.ts",
+    "build:chrome-ai": "./build-chrome-ai.sh",
+    "preview:web": "vite preview --config vite.config.web.ts",
+    "preview:pwa": "npm run build:web && npx serve webapp/dist -s",
+    "package:extension": "npm run build:extension && cd extension && zip -r ../accessible-web-extension.zip .",
+    "package:chrome-ai": "npm run build:chrome-ai && cd dist-extension && zip -r ../chrome-ai-extension.zip .",
+    "clean": "rm -rf dist dist-extension webapp/dist extension/dist",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "format": "prettier --write \"**/*.{ts,tsx,json,css,md}\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "accessibility",
+    "low-literacy",
+    "chrome-extension",
+    "pwa",
+    "ai",
+    "text-simplification",
+    "tts",
+    "translation"
+  ],
+  "author": "Your Team",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.1"
+  },
+  "devDependencies": {
+    "@crxjs/vite-plugin": "^2.0.0-beta.21",
+    "@types/chrome": "^0.0.258",
+    "@types/react": "^18.2.56",
+    "@types/react-dom": "^18.2.19",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "prettier": "^3.2.5",
+    "serve": "^14.2.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.1.4",
+    "vite-plugin-pwa": "^0.17.5",
+    "vitest": "^1.3.1",
+    "workbox-window": "^7.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/accessible-web-low-literacy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/accessible-web-low-literacy/issues"
+  },
+  "homepage": "https://github.com/yourusername/accessible-web-low-literacy#readme"
+}

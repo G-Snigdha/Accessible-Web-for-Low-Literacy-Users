@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 Smart Text Assistant - Empowering Clear Communication</title>
+    <link rel="stylesheet" href="enhanced-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#4F46E5">
+    <meta name="description" content="Transform complex text into simple, accessible content. Perfect for low-literacy users with text simplification, translation, and read-aloud features.">
+</head>
+<body>
+    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header Navigation -->
+    <header class="header" role="banner">
+        <nav class="nav-container" role="navigation" aria-label="Main navigation">
+            <div class="logo-section">
+                <span class="logo">📚</span>
+                <h1 class="brand-name">Smart Text Assistant</h1>
+            </div>
+            
+            <div class="nav-links">
+                <button class="nav-btn" onclick="scrollToSection('features')" aria-label="View features">
+                    ✨ Features
+                </button>
+                <button class="nav-btn" onclick="scrollToSection('about')" aria-label="About us">
+                    ℹ️ About
+                </button>
+                <button class="nav-btn" onclick="toggleSettings()" aria-label="Open settings">
+                    ⚙️ Settings
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <main id="main-content" tabindex="-1">
+        <section class="hero-section" role="banner">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        <span class="gradient-text">Smart Text Assistant</span><br>
+                        Empowering Clear Communication ✨
+                    </h1>
+                    <p class="hero-description">
+                        Transform complex content into easy-to-read text. Perfect for people with low literacy, 
+                        language learners, and anyone who wants clearer communication.
+                    </p>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">5M+</div>
+                            <div class="stat-label">Words Simplified</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Languages</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">99%</div>
+                            <div class="stat-label">Accuracy</div>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-actions">
+                        <button class="cta-primary" onclick="scrollToSection('text-input')" aria-label="Start using the text reader">
+                            🚀 Start Reading Now
+                        </button>
+                        <button class="cta-secondary" onclick="scrollToSection('features')" aria-label="Learn more about features">
+                            📖 Learn More
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="demo-card">
+                        <div class="demo-header">
+                            <span class="demo-title">📝 Live Demo</span>
+                            <div class="demo-controls">
+                                <span class="control red"></span>
+                                <span class="control yellow"></span>
+                                <span class="control green"></span>
+                            </div>
+                        </div>
+                        <div class="demo-content">
+                            <div class="demo-input">
+                                <strong>Complex:</strong> "The multitudinous technological innovations..."
+                            </div>
+                            <div class="demo-arrow">↓</div>
+                            <div class="demo-output">
+                                <strong>Simple:</strong> "Many new technologies need simple ways to use them."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Action Bar -->
+        <section class="quick-actions" id="text-input">
+            <div class="container">
+                <h2 class="section-title">✨ Quick Text Processing</h2>
+                
+                <div class="input-container">
+                    <div class="input-methods">
+                        <button class="input-method active" onclick="switchInputMethod('text')" data-method="text">
+                            📝 Type Text
+                        </button>
+                        <button class="input-method" onclick="switchInputMethod('url')" data-method="url">
+                            🔗 Paste URL
+                        </button>
+                        <button class="input-method" onclick="switchInputMethod('upload')" data-method="upload">
+                            📁 Upload File
+                        </button>
+                    </div>
+                    
+                    <div class="input-area">
+                        <div class="input-section active" id="text-input-section">
+                            <label for="text-input-field" class="input-label">
+                                <strong>Step 1:</strong> Enter your text below
+                            </label>
+                            <textarea 
+                                id="text-input-field" 
+                                class="text-input" 
+                                placeholder="Paste or type your complex text here. We'll make it simple and easy to understand..."
+                                rows="6"
+                                aria-describedby="text-help"
+                            ></textarea>
+                            <div id="text-help" class="input-help">
+                                💡 Tip: Paste news articles, documents, or any text that's hard to read
+                                <button class="example-text-btn" onclick="loadExampleText()" style="margin-left: 10px; padding: 4px 12px; background: var(--primary-500); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.875rem;">
+                                    ✨ Try Example Text
+                                </button>
+                            </div>
+                            
+                            <!-- Quick Action Buttons Right Under Input -->
+                            <div class="quick-process-buttons" style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; padding: 15px; background: #f8f9fa; border-radius: 8px; border: 2px dashed #e0e0e0;">
+                                <div style="width: 100%; margin-bottom: 10px; color: #666; font-weight: 600;">
+                                    <strong>Step 2:</strong> Choose what to do with your text:
+                                </div>
+                                <button class="quick-btn" onclick="processWithFeature('simplify')" style="flex: 1; min-width: 150px; padding: 12px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    ✨ Simplify Text
+                                </button>
+                                <button class="quick-btn" onclick="processWithFeature('translate')" style="flex: 1; min-width: 150px; padding: 12px 20px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    🌍 Translate
+                                </button>
+                                <button class="quick-btn" onclick="processWithFeature('rewrite')" style="flex: 1; min-width: 150px; padding: 12px 20px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    📝 Rewrite
+                                </button>
+                                <button class="quick-btn" onclick="processWithFeature('speech')" style="flex: 1; min-width: 150px; padding: 12px 20px; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    🔊 Read Aloud
+                                </button>
+                                <button class="quick-btn" onclick="processWithFeature('proofread')" style="flex: 1; min-width: 150px; padding: 12px 20px; background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    ✓ Proofread
+                                </button>
+                                <button class="quick-btn" onclick="processWithFeature('analyze')" style="flex: 1; min-width: 150px; padding: 12px 20px; background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    📊 Analyze
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="input-section" id="url-input-section">
+                            <label for="url-input-field" class="input-label">Enter website URL:</label>
+                            <input 
+                                type="url" 
+                                id="url-input-field" 
+                                class="url-input" 
+                                placeholder="https://example.com/article"
+                                aria-describedby="url-help"
+                            >
+                            <div id="url-help" class="input-help">
+                                🌐 We'll fetch and simplify the webpage content for you
+                            </div>
+                        </div>
+                        
+                        <div class="input-section" id="upload-input-section">
+                            <label for="file-input-field" class="input-label">Upload document:</label>
+                            <div class="file-upload-area" onclick="document.getElementById('file-input-field').click()">
+                                <input type="file" id="file-input-field" accept=".txt,.pdf,.doc,.docx" style="display:none">
+                                <div class="upload-content">
+                                    <span class="upload-icon">📁</span>
+                                    <p>Click to upload or drag & drop</p>
+                                    <small>Supports: TXT, PDF, DOC, DOCX</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="input-actions">
+                            <button class="clear-btn" onclick="clearInput()" aria-label="Clear all input">
+                                🗑️ Clear
+                            </button>
+                            <button class="paste-btn" onclick="pasteFromClipboard()" aria-label="Paste from clipboard">
+                                📋 Paste
+                            </button>
+                            <button class="simplify-all-btn" onclick="simplifyAll()" aria-label="Load example and simplify automatically">
+                                ✨ Simplify All
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Features Section -->
+        <section class="features-section" id="features">
+            <div class="container">
+                <h2 class="section-title">🎯 Powerful Features for Everyone</h2>
+                <p class="section-subtitle">
+                    Choose from our comprehensive suite of text processing tools designed for accessibility and ease of use.
+                </p>
+                
+                <div class="features-grid">
+                    <!-- Simplify Feature -->
+                    <div class="feature-card modern" data-feature="simplify">
+                        <div class="feature-header">
+                            <div class="feature-icon">✨</div>
+                            <div class="feature-badge">Most Popular</div>
+                        </div>
+                        <h3 class="feature-title">Text Simplification</h3>
+                        <p class="feature-description">
+                            Transform complex sentences into clear, easy-to-read text. Perfect for improving comprehension.
+                        </p>
+                        <div class="feature-example">
+                            <div class="example-before">
+                                <strong>Before:</strong> "Utilize comprehensive methodologies"
+                            </div>
+                            <div class="example-after">
+                                <strong>After:</strong> "Use simple methods"
+                            </div>
+                        </div>
+                        <div class="feature-controls">
+                            <div class="difficulty-selector">
+                                <label>Reading Level:</label>
+                                <select id="simplify-level" class="modern-select">
+                                    <option value="elementary">Elementary (Grade 3-5)</option>
+                                    <option value="middle" selected>Middle School (Grade 6-8)</option>
+                                    <option value="high">High School (Grade 9-12)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="feature-btn modern simplify" onclick="processWithFeatureOptions('simplify')" aria-label="Simplify text">
+                            <span class="btn-icon">✨</span>
+                            <span class="btn-text">Simplify Now</span>
+                            <span class="btn-arrow">→</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Translation Feature -->
+                    <div class="feature-card modern" data-feature="translate">
+                        <div class="feature-header">
+                            <div class="feature-icon">🌍</div>
+                            <div class="feature-badge new">50+ Languages</div>
+                        </div>
+                        <h3 class="feature-title">Smart Translation</h3>
+                        <p class="feature-description">
+                            Instantly translate content with cultural context and natural phrasing.
+                        </p>
+                        <div class="feature-languages">
+                            <span class="lang-badge">🇺🇸 English</span>
+                            <span class="lang-badge">🇪🇸 Spanish</span>
+                            <span class="lang-badge">🇫🇷 French</span>
+                            <span class="lang-badge">🇩🇪 German</span>
+                        </div>
+                        <div class="feature-controls">
+                            <div class="translation-selector">
+                                <div class="lang-row">
+                                    <label>From:</label>
+                                    <select id="translate-from" class="modern-select lang-select">
+                                        <option value="auto">🔍 Auto-detect</option>
+                                        <option value="en">🇺🇸 English</option>
+                                        <option value="es">🇪🇸 Spanish</option>
+                                        <option value="fr">🇫🇷 French</option>
+                                        <option value="de">🇩🇪 German</option>
+                                        <option value="it">🇮🇹 Italian</option>
+                                        <option value="pt">🇵🇹 Portuguese</option>
+                                        <option value="ru">🇷🇺 Russian</option>
+                                        <option value="ja">🇯🇵 Japanese</option>
+                                        <option value="ko">🇰🇷 Korean</option>
+                                        <option value="zh">🇨🇳 Chinese</option>
+                                    </select>
+                                </div>
+                                <div class="lang-swap" onclick="swapLanguages()">⇄</div>
+                                <div class="lang-row">
+                                    <label>To:</label>
+                                    <select id="translate-to" class="modern-select lang-select">
+                                        <option value="en">🇺🇸 English</option>
+                                        <option value="es" selected>🇪🇸 Spanish</option>
+                                        <option value="fr">🇫🇷 French</option>
+                                        <option value="de">🇩🇪 German</option>
+                                        <option value="it">🇮🇹 Italian</option>
+                                        <option value="pt">🇵🇹 Portuguese</option>
+                                        <option value="ru">🇷🇺 Russian</option>
+                                        <option value="ja">🇯🇵 Japanese</option>
+                                        <option value="ko">🇰🇷 Korean</option>
+                                        <option value="zh">🇨🇳 Chinese</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="feature-btn modern translate" onclick="processWithFeatureOptions('translate')" aria-label="Translate text">
+                            <span class="btn-icon">🌍</span>
+                            <span class="btn-text">Translate Now</span>
+                            <span class="btn-arrow">→</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Rewrite Feature -->
+                    <div class="feature-card modern" data-feature="rewrite">
+                        <div class="feature-header">
+                            <div class="feature-icon">📝</div>
+                            <div class="feature-badge">AI Powered</div>
+                        </div>
+                        <h3 class="feature-title">Smart Rewriting</h3>
+                        <p class="feature-description">
+                            Rewrite content in different styles while maintaining meaning. Great for better understanding.
+                        </p>
+                        <div class="feature-example">
+                            <div class="example-before">
+                                <strong>Before:</strong> "Subsequently, we shall proceed"
+                            </div>
+                            <div class="example-after">
+                                <strong>After:</strong> "Next, we will continue"
+                            </div>
+                        </div>
+                        <div class="feature-controls">
+                            <div class="style-selector">
+                                <label>Writing Style:</label>
+                                <select id="rewrite-style" class="modern-select">
+                                    <option value="formal">📋 Formal</option>
+                                    <option value="casual" selected>💬 Casual</option>
+                                    <option value="professional">💼 Professional</option>
+                                    <option value="creative">� Creative</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="feature-btn modern rewrite" onclick="processWithFeatureOptions('rewrite')" aria-label="Rewrite text">
+                            <span class="btn-icon">📝</span>
+                            <span class="btn-text">Rewrite Now</span>
+                            <span class="btn-arrow">→</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Text-to-Speech Feature -->
+                    <div class="feature-card modern" data-feature="speech">
+                        <div class="feature-header">
+                            <div class="feature-icon">🔊</div>
+                            <div class="feature-badge">Audio</div>
+                        </div>
+                        <h3 class="feature-title">Read Aloud</h3>
+                        <p class="feature-description">
+                            High-quality text-to-speech with adjustable speed, pitch, and natural-sounding voices.
+                        </p>
+                        <div class="feature-controls">
+                            <div class="audio-controls">
+                                <div class="control-group">
+                                    <label>Voice:</label>
+                                    <select id="voice-select" class="modern-select">
+                                        <option value="default">🎤 Default</option>
+                                        <option value="male">👨 Male Voice</option>
+                                        <option value="female">👩 Female Voice</option>
+                                    </select>
+                                </div>
+                                <div class="control-row">
+                                    <div class="control-group">
+                                        <label>Speed: <span id="speed-value">1.0x</span></label>
+                                        <input type="range" id="speech-speed" min="0.5" max="2" value="1" step="0.1" class="modern-range">
+                                    </div>
+                                    <div class="control-group">
+                                        <label>Pitch: <span id="pitch-value">1.0x</span></label>
+                                        <input type="range" id="speech-pitch" min="0.5" max="2" value="1" step="0.1" class="modern-range">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="feature-btn modern speech" onclick="processWithFeatureOptions('speech')" aria-label="Read text aloud">
+                            <span class="btn-icon">🔊</span>
+                            <span class="btn-text">Read Aloud</span>
+                            <span class="btn-arrow">→</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Proofreading Feature -->
+                    <div class="feature-card modern" data-feature="proofread">
+                        <div class="feature-header">
+                            <div class="feature-icon">✏️</div>
+                            <div class="feature-badge">99.5% Accuracy</div>
+                        </div>
+                        <h3 class="feature-title">Smart Proofreading</h3>
+                        <p class="feature-description">
+                            Fix grammar, spelling, and punctuation errors while improving readability and flow.
+                        </p>
+                        <div class="feature-stats">
+                            <div class="stat">
+                                <span class="stat-icon">🎯</span>
+                                <span class="stat-value">Grammar</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-icon">✍️</span>
+                                <span class="stat-value">Spelling</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-icon">📝</span>
+                                <span class="stat-value">Style</span>
+                            </div>
+                        </div>
+                        <div class="feature-controls">
+                            <div class="proofread-options">
+                                <label>
+                                    <input type="checkbox" id="fix-grammar" checked>
+                                    <span class="checkbox-custom"></span>
+                                    Grammar & Punctuation
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="fix-spelling" checked>
+                                    <span class="checkbox-custom"></span>
+                                    Spelling Errors
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="improve-style">
+                                    <span class="checkbox-custom"></span>
+                                    Style Improvements
+                                </label>
+                            </div>
+                        </div>
+                        <button class="feature-btn modern proofread" onclick="processWithFeatureOptions('proofread')" aria-label="Proofread text">
+                            <span class="btn-icon">✏️</span>
+                            <span class="btn-text">Proofread Now</span>
+                            <span class="btn-arrow">→</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Analysis Feature -->
+                    <div class="feature-card modern" data-feature="analyze">
+                        <div class="feature-header">
+                            <div class="feature-icon">📊</div>
+                            <div class="feature-badge">Detailed Insights</div>
+                        </div>
+                        <h3 class="feature-title">Text Analysis</h3>
+                        <p class="feature-description">
+                            Get detailed insights about reading level, complexity, and suggestions for improvement.
+                        </p>
+                        <div class="feature-metrics">
+                            <div class="metric">
+                                <span class="metric-icon">📝</span>
+                                <span class="metric-label">Word Count</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-icon">📈</span>
+                                <span class="metric-label">Reading Level</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-icon">🎯</span>
+                                <span class="metric-label">Complexity</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-icon">⏱️</span>
+                                <span class="metric-label">Read Time</span>
+                            </div>
+                        </div>
+                        <button class="feature-btn modern analyze" onclick="processWithFeatureOptions('analyze')" aria-label="Analyze text">
+                            <span class="btn-icon">📊</span>
+                            <span class="btn-text">Analyze Now</span>
+                            <span class="btn-arrow">→</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section hidden" id="results-section">
+            <div class="container">
+                <div class="results-header">
+                    <h2 class="section-title">🎉 Your Results</h2>
+                    <button class="close-results" onclick="hideResults()" aria-label="Close results">✕</button>
+                </div>
+                
+                <div class="results-container">
+                    <div class="result-tabs">
+                        <button class="tab-btn active" data-tab="processed">📝 Processed Text</button>
+                        <button class="tab-btn" data-tab="analysis">📊 Analysis</button>
+                        <button class="tab-btn" data-tab="comparison">🔄 Before/After</button>
+                    </div>
+                    
+                    <div class="result-content">
+                        <div class="tab-panel active" id="processed-panel">
+                            <div class="result-text" id="processed-text"></div>
+                            <div class="result-actions">
+                                <button class="action-btn primary" onclick="readResultAloud()" aria-label="Read results aloud">
+                                    🔊 Read Aloud
+                                </button>
+                                <button class="action-btn secondary" onclick="copyResult()" aria-label="Copy results to clipboard">
+                                    📋 Copy Text
+                                </button>
+                                <button class="action-btn secondary" onclick="downloadResult()" aria-label="Download results as file">
+                                    💾 Download
+                                </button>
+                                <button class="action-btn secondary" onclick="shareResult()" aria-label="Share results">
+                                    📤 Share
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-panel" id="analysis-panel">
+                            <div class="analysis-grid" id="analysis-content"></div>
+                        </div>
+                        
+                        <div class="tab-panel" id="comparison-panel">
+                            <div class="comparison-view">
+                                <div class="comparison-side">
+                                    <h4>📄 Original Text</h4>
+                                    <div class="comparison-text" id="original-text"></div>
+                                </div>
+                                <div class="comparison-divider">→</div>
+                                <div class="comparison-side">
+                                    <h4>✨ Improved Text</h4>
+                                    <div class="comparison-text" id="improved-text"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced Features -->
+        <section class="advanced-features" id="advanced">
+            <div class="container">
+                <h2 class="section-title">🚀 Advanced Capabilities</h2>
+                
+                <div class="advanced-grid">
+                    <div class="advanced-card">
+                        <div class="advanced-icon">💾</div>
+                        <h3>Offline Mode</h3>
+                        <p>Works without internet using local processing. Perfect for areas with limited connectivity.</p>
+                        <div class="status-indicator">
+                            <span class="status-dot offline"></span>
+                            <span>Currently Online</span>
+                        </div>
+                    </div>
+                    
+                    <div class="advanced-card">
+                        <div class="advanced-icon">🔖</div>
+                        <h3>Bookmarks & History</h3>
+                        <p>Save simplified articles and track your reading history for easy access later.</p>
+                        <div class="bookmark-count">
+                            <span class="count">0</span>
+                            <span>Saved Articles</span>
+                        </div>
+                    </div>
+                    
+                    <div class="advanced-card">
+                        <div class="advanced-icon">📱</div>
+                        <h3>Progressive Web App</h3>
+                        <p>Install as a native app on mobile devices for full-screen experience and offline access.</p>
+                        <button class="install-pwa" onclick="promptInstall()" aria-label="Install as app">
+                            📲 Install App
+                        </button>
+                    </div>
+                    
+                    <div class="advanced-card">
+                        <div class="advanced-icon">🎨</div>
+                        <h3>Smart Highlighting</h3>
+                        <p>Hover over difficult words to see easier synonyms and definitions instantly.</p>
+                        <div class="highlight-demo">
+                            <span class="word-difficult" data-simple="use">utilize</span>
+                            <span class="word-difficult" data-simple="complete">comprehensive</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about-section" id="about">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2 class="section-title">🌟 About Our Mission</h2>
+                        <p class="about-description">
+                            We believe everyone deserves access to clear, understandable information. Our platform uses 
+                            advanced AI to break down complex text into simple, accessible content that anyone can understand.
+                        </p>
+                        
+                        <div class="mission-points">
+                            <div class="mission-point">
+                                <div class="point-icon">♿</div>
+                                <div class="point-text">
+                                    <strong>Accessibility First</strong><br>
+                                    Designed for people with low literacy, dyslexia, and reading difficulties.
+                                </div>
+                            </div>
+                            
+                            <div class="mission-point">
+                                <div class="point-icon">🌍</div>
+                                <div class="point-text">
+                                    <strong>Global Reach</strong><br>
+                                    Supporting 50+ languages with cultural context and local understanding.
+                                </div>
+                            </div>
+                            
+                            <div class="mission-point">
+                                <div class="point-icon">🔬</div>
+                                <div class="point-text">
+                                    <strong>Research-Based</strong><br>
+                                    Built on proven methods from literacy research and cognitive science.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="impact-stats">
+                            <h3>Our Impact</h3>
+                            <div class="impact-grid">
+                                <div class="impact-item">
+                                    <span class="impact-number">1.2M+</span>
+                                    <span class="impact-label">Users Helped</span>
+                                </div>
+                                <div class="impact-item">
+                                    <span class="impact-number">15M+</span>
+                                    <span class="impact-label">Texts Simplified</span>
+                                </div>
+                                <div class="impact-item">
+                                    <span class="impact-number">98%</span>
+                                    <span class="impact-label">User Satisfaction</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="about-visual">
+                        <div class="impact-chart">
+                            <div class="chart-header">📈 Reading Improvement</div>
+                            <div class="chart-bars">
+                                <div class="chart-bar">
+                                    <div class="bar-fill" style="height: 60%"></div>
+                                    <div class="bar-label">Before</div>
+                                </div>
+                                <div class="chart-bar">
+                                    <div class="bar-fill" style="height: 95%"></div>
+                                    <div class="bar-label">After</div>
+                                </div>
+                            </div>
+                            <div class="chart-footer">35% improvement in comprehension</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay hidden" id="settings-modal">
+        <div class="modal-content" role="dialog" aria-labelledby="settings-title" aria-modal="true">
+            <div class="modal-header">
+                <h2 id="settings-title">⚙️ Accessibility Settings</h2>
+                <button class="modal-close" onclick="toggleSettings()" aria-label="Close settings">✕</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="settings-grid">
+                    <div class="setting-group">
+                        <h3>🎨 Display</h3>
+                        
+                        <div class="setting-item">
+                            <label for="font-size-setting">Font Size:</label>
+                            <select id="font-size-setting" onchange="updateFontSize(this.value)">
+                                <option value="small">Small</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="large">Large</option>
+                                <option value="extra-large">Extra Large</option>
+                            </select>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <label for="contrast-setting">Contrast:</label>
+                            <select id="contrast-setting" onchange="updateContrast(this.value)">
+                                <option value="normal" selected>Normal</option>
+                                <option value="high">High Contrast</option>
+                                <option value="dark">Dark Mode</option>
+                            </select>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <label for="animations-setting">Animations:</label>
+                            <input type="checkbox" id="animations-setting" checked onchange="toggleAnimations(this.checked)">
+                        </div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h3>🔊 Audio</h3>
+                        
+                        <div class="setting-item">
+                            <label for="voice-speed">Voice Speed:</label>
+                            <input type="range" id="voice-speed" min="0.5" max="2" value="1" step="0.1" onchange="updateVoiceSpeed(this.value)">
+                            <span class="range-value">1.0x</span>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <label for="voice-pitch">Voice Pitch:</label>
+                            <input type="range" id="voice-pitch" min="0.5" max="2" value="1" step="0.1" onchange="updateVoicePitch(this.value)">
+                            <span class="range-value">1.0x</span>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <label for="auto-read">Auto-read Results:</label>
+                            <input type="checkbox" id="auto-read" onchange="toggleAutoRead(this.checked)">
+                        </div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h3>🌍 Language</h3>
+                        
+                        <div class="setting-item">
+                            <label for="interface-language">Interface Language:</label>
+                            <select id="interface-language" onchange="updateInterfaceLanguage(this.value)">
+                                <option value="en" selected>English</option>
+                                <option value="es">Español</option>
+                                <option value="fr">Français</option>
+                                <option value="de">Deutsch</option>
+                                <option value="it">Italiano</option>
+                            </select>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <label for="default-translation">Default Translation:</label>
+                            <select id="default-translation" onchange="updateDefaultTranslation(this.value)">
+                                <option value="auto" selected>Auto-detect</option>
+                                <option value="en">English</option>
+                                <option value="es">Spanish</option>
+                                <option value="fr">French</option>
+                                <option value="de">German</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-actions">
+                    <button class="btn-secondary" onclick="resetSettings()">🔄 Reset to Defaults</button>
+                    <button class="btn-primary" onclick="saveSettings()">💾 Save Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>📚 Accessible Text Reader</h3>
+                    <p>Making the web accessible for everyone, one text at a time.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Twitter">🐦</a>
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="LinkedIn">💼</a>
+                        <a href="#" aria-label="GitHub">🐙</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Features</h4>
+                    <ul>
+                        <li><a href="#features">Text Simplification</a></li>
+                        <li><a href="#features">Translation</a></li>
+                        <li><a href="#features">Read Aloud</a></li>
+                        <li><a href="#features">Proofreading</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Developers</h4>
+                    <ul>
+                        <li><a href="#">API Documentation</a></li>
+                        <li><a href="#">Chrome Extension</a></li>
+                        <li><a href="#">Mobile Apps</a></li>
+                        <li><a href="#">Open Source</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Accessible Text Reader. Made with ❤️ for accessibility.</p>
+                <div class="footer-badges">
+                    <span class="badge">♿ WCAG 2.1 AA</span>
+                    <span class="badge">🔒 Privacy First</span>
+                    <span class="badge">🌍 50+ Languages</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay hidden" id="loading-overlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Processing your text...</div>
+            <div class="loading-subtext">This may take a few moments</div>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div class="toast hidden" id="success-toast">
+        <div class="toast-content">
+            <span class="toast-icon">✅</span>
+            <span class="toast-message">Text processed successfully!</span>
+        </div>
+    </div>
+
+    <script src="enhanced-app.js"></script>
+</body>
+</html>

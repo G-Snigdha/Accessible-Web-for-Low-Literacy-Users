@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Text Processor</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            padding: 40px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 { color: #333; margin-bottom: 10px; }
+        .subtitle { color: #666; margin-bottom: 30px; }
+        
+        .step { margin-bottom: 25px; }
+        .step-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            min-height: 150px;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .buttons-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 2px dashed #e0e0e0;
+        }
+        
+        button {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: white;
+        }
+        
+        .btn-simplify {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .btn-translate {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        .btn-rewrite {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        .btn-read {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        .btn-proofread {
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+        }
+        .btn-analyze {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        button:active {
+            transform: translateY(-1px);
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            display: none;
+        }
+        .result.show {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .result-title {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .result-content {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .example-btn {
+            margin-left: 10px;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .example-btn:hover {
+            background: #5568d3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Simple Text Processor</h1>
+        <p class="subtitle">Paste your text, then click a button to process it!</p>
+        
+        <div class="step">
+            <div class="step-title">Step 1: Paste or type your text</div>
+            <textarea id="textInput" placeholder="Paste your text here... (e.g., 'The utilization of comprehensive methodologies facilitates better outcomes.')"></textarea>
+            <button class="example-btn" onclick="loadExample()">✨ Load Example</button>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">Step 2: Choose an action</div>
+            <div class="buttons-container">
+                <button class="btn-simplify" onclick="processText('simplify')">
+                    ✨ Simplify
+                </button>
+                <button class="btn-translate" onclick="processText('translate')">
+                    🌍 Translate
+                </button>
+                <button class="btn-rewrite" onclick="processText('rewrite')">
+                    📝 Rewrite
+                </button>
+                <button class="btn-read" onclick="processText('read')">
+                    🔊 Read Aloud
+                </button>
+                <button class="btn-proofread" onclick="processText('proofread')">
+                    ✓ Proofread
+                </button>
+                <button class="btn-analyze" onclick="processText('analyze')">
+                    📊 Analyze
+                </button>
+            </div>
+        </div>
+        
+        <div class="result" id="result">
+            <div class="result-title" id="resultTitle">Result:</div>
+            <div class="result-content" id="resultContent"></div>
+        </div>
+    </div>
+
+    <script>
+        function loadExample() {
+            document.getElementById('textInput').value = "The utilization of comprehensive methodologies facilitates the implementation of robust solutions that accommodate diverse requirements and demonstrate significant improvements.";
+        }
+        
+        async function processText(action) {
+            const textInput = document.getElementById('textInput');
+            const text = textInput.value.trim();
+            const result = document.getElementById('result');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultContent = document.getElementById('resultContent');
+            
+            if (!text) {
+                alert('⚠️ Please enter some text first!');
+                textInput.focus();
+                return;
+            }
+            
+            // Show loading
+            result.classList.add('show');
+            resultTitle.textContent = `Processing with ${action}...`;
+            resultContent.innerHTML = '<div class="loading"></div> Please wait...';
+            
+            try {
+                const response = await fetch('http://localhost:3001/api/text/process', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text, action })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultTitle.textContent = `✅ ${action.charAt(0).toUpperCase() + action.slice(1)} Result:`;
+                    resultContent.textContent = data.data.processed_text || 'Processed successfully!';
+                } else {
+                    resultTitle.textContent = '❌ Error';
+                    resultContent.textContent = 'Failed to process text. Please try again.';
+                }
+            } catch (error) {
+                resultTitle.textContent = '❌ Connection Error';
+                resultContent.textContent = 'Could not connect to server. Make sure the backend is running on port 3001.';
+            }
+        }
+    </script>
+</body>
+</html>
